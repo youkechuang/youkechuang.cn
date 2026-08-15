@@ -356,6 +356,7 @@ $RECYCLE.BIN/
 
 # General
 .DS_Store
+deploy/keys-local/
 .AppleDouble
 .LSOverride
 

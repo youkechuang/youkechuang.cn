@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wrist Shot 项目文档</title>
+    <link rel="stylesheet" href="startup.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <a class="top-link" href="index.html">返回创业专题</a>
+      <section class="hero">
+        <p class="eyebrow">Apple Watch / Motion Game</p>
+        <h1>Wrist Shot：用 Apple Watch 手腕动作控制 iPhone 投篮</h1>
+        <p class="subtitle">
+          Wrist Shot 是一个 iPhone + Apple Watch 体感篮球原型。Apple Watch 读取手腕运动，估算瞄准、弧线、力度、旋转和稳定度，再把投篮消息发送到 iPhone 完成动画和计分。
+        </p>
+      </section>
+
+      <div class="doc-layout section">
+        <nav class="toc" aria-label="目录">
+          <a href="#summary">产品摘要</a>
+          <a href="#flow">体验流程</a>
+          <a href="#architecture">技术架构</a>
+          <a href="#debug">调试方式</a>
+          <a href="#roadmap">迭代方向</a>
+        </nav>
+        <div class="doc-main">
+          <section id="summary" class="panel">
+            <h2>产品摘要</h2>
+            <p>这个项目验证一个核心假设：Apple Watch 的手腕动作可以作为轻量体感输入，让 iPhone 游戏获得更自然、更有趣的控制方式。</p>
+            <div class="meta-grid">
+              <div class="mini-card"><strong>目标场景</strong>短时、轻量、可随手玩的体感小游戏。</div>
+              <div class="mini-card"><strong>核心设备</strong>iPhone 负责画面，Apple Watch 负责动作输入。</div>
+              <div class="mini-card"><strong>MVP 重点</strong>先用简化 2D 轨迹和宽容判定验证爽感。</div>
+            </div>
+          </section>
+
+          <section id="flow" class="panel">
+            <h2>体验流程</h2>
+            <ol>
+              <li>打开 iPhone App，看到球场、篮筐、预览弧线、得分和反馈。</li>
+              <li>打开 Apple Watch App，Watch 开始低频发送瞄准信息。</li>
+              <li>用户做出快速手腕投篮动作。</li>
+              <li>Watch 发送 <code>shot</code> 消息到 iPhone。</li>
+              <li>iPhone 根据力度、角度、瞄准和稳定度播放篮球轨迹并结算得分。</li>
+            </ol>
+          </section>
+
+          <section id="architecture" class="panel">
+            <h2>技术架构</h2>
+            <div class="feature-grid">
+              <div class="mini-card"><strong>iPhone</strong>SwiftUI + SpriteKit，负责球场渲染、投篮动画、计分和反馈。</div>
+              <div class="mini-card"><strong>Apple Watch</strong>SwiftUI + CoreMotion，负责手腕动作读取和投篮检测。</div>
+              <div class="mini-card"><strong>设备通信</strong>WatchConnectivity 发送紧凑的 <code>ShotMessage</code>。</div>
+            </div>
+            <p>关键文件包括 <code>ShotModels.swift</code>、<code>CourtSceneView.swift</code>、<code>PhoneConnectivity.swift</code>、<code>MotionShotController.swift</code> 和 <code>WatchConnectivityClient.swift</code>。</p>
+          </section>
+
+          <section id="debug" class="panel">
+            <h2>本地调试方式</h2>
+            <p>Debug 构建会在 iPhone 上显示调参面板，可以不用 Apple Watch，直接调整瞄准、弧线和力度，再点击篮球按钮触发同一套计分逻辑。</p>
+            <pre><code>xcodegen generate
+xcodebuild -project WristShot.xcodeproj \
+  -scheme WristShot \
+  -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.3.1' \
+  -configuration Debug \
+  build CODE_SIGNING_ALLOWED=NO ENABLE_DEBUG_DYLIB=NO</code></pre>
+            <p><code>ENABLE_DEBUG_DYLIB=NO</code> 用于命令行模拟器启动，避免 App 安装后出现黑屏壳的问题。</p>
+          </section>
+
+          <section id="roadmap" class="panel">
+            <h2>迭代方向</h2>
+            <ul>
+              <li>继续调优 <code>MotionShotController</code> 的动作阈值和力度映射。</li>
+              <li>优化 <code>ShotPhysics</code> 的轨迹和命中容差，让反馈更符合直觉。</li>
+              <li>增加连击、限时挑战、命中区域和训练模式。</li>
+              <li>真机联调 iPhone + Apple Watch，验证体感延迟和稳定性。</li>
+              <li>后续可扩展为更多腕部动作小游戏，而不只是投篮。</li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </main>
+    <script src="/static/focus-reminder-global.js"></script>
+</body>
+</html>

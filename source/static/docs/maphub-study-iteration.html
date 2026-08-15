@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maphub 预习与分区测试迭代文档</title>
+    <meta
+      name="description"
+      content="Maphub 地图学习工具预习模式、区域学习、区域测试与学习闭环的迭代目标、功能范围、时间计划和验收标准。"
+    />
+    <link rel="stylesheet" href="product-doc.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <nav class="top-nav" aria-label="顶部导航">
+        <a href="/">返回网站首页</a>
+        <a href="/static/maphub/index.html">打开地图工具</a>
+        <a href="/static/docs/product.html">产品文档</a>
+      </nav>
+
+      <header class="hero">
+        <p class="eyebrow">Iteration Plan</p>
+        <h1>Maphub 预习与分区测试迭代文档</h1>
+        <p class="subtitle">
+          本次迭代聚焦地图学习工具的预习体验和测试范围控制。核心方向是让用户先通过点击地图主动探索，
+          再按华北、华东等区域分步学习和测试，形成更清晰的学习闭环。
+        </p>
+        <div class="meta-grid" aria-label="迭代概览">
+          <div class="meta-card">
+            <strong>迭代对象</strong>
+            <span>省份真实地图游戏</span>
+          </div>
+          <div class="meta-card">
+            <strong>迭代重点</strong>
+            <span>预习、区域、测试闭环</span>
+          </div>
+          <div class="meta-card">
+            <strong>建议周期</strong>
+            <span>3 个工作日</span>
+          </div>
+          <div class="meta-card">
+            <strong>优先级</strong>
+            <span>高</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="doc-layout">
+        <aside class="toc" aria-label="文档目录">
+          <p class="toc-title">目录</p>
+          <ol>
+            <li><a href="#background">1. 背景与问题</a></li>
+            <li><a href="#goals">2. 迭代目标</a></li>
+            <li><a href="#scope">3. 本次范围</a></li>
+            <li><a href="#preview">4. 预习模式设计</a></li>
+            <li><a href="#region">5. 区域学习与测试</a></li>
+            <li><a href="#flow">6. 用户流程</a></li>
+            <li><a href="#schedule">7. 时间计划</a></li>
+            <li><a href="#acceptance">8. 验收标准</a></li>
+            <li><a href="#risks">9. 风险与后续</a></li>
+          </ol>
+        </aside>
+
+        <article class="content">
+          <section id="background">
+            <h2>1. 背景与问题</h2>
+            <p class="lead">
+              当前 Maphub 已经具备预习、闯关考试、每日挑战、错题复习和查看答案能力，
+              但预习模式仍然偏向“列表查询”，不够符合地图学习的直觉。
+            </p>
+            <div class="callout">
+              <strong>核心问题</strong>
+              <p>
+                用户进入预习后，应该首先和地图互动，而不是在右侧列表中查找省份。
+                预习模式需要从“展示资料”升级为“主动探索 + 分区记忆”。
+              </p>
+            </div>
+            <ul>
+              <li>省份列表占用空间较大，用户容易把注意力放在列表而不是地图上。</li>
+              <li>默认显示所有名称时学习难度过低，更像直接看答案。</li>
+              <li>全国 34 个省级行政区一次学习负担较重，需要按区域拆分。</li>
+              <li>预习和测试之间缺少“学完某个区域后立即测试该区域”的闭环。</li>
+            </ul>
+          </section>
+
+          <section id="goals">
+            <h2>2. 迭代目标</h2>
+            <div class="grid-two">
+              <div class="panel">
+                <h3>体验目标</h3>
+                <p>
+                  让用户在预习模式下通过点击地图区域获取省份信息，形成更自然的探索体验。
+                </p>
+              </div>
+              <div class="panel">
+                <h3>学习目标</h3>
+                <p>
+                  支持按华北、华东等区域分步预习和测试，降低一次性学习压力。
+                </p>
+              </div>
+              <div class="panel">
+                <h3>产品目标</h3>
+                <p>
+                  将地图游戏从简单点击小游戏升级为可持续使用的地理学习工具。
+                </p>
+              </div>
+              <div class="panel">
+                <h3>运营目标</h3>
+                <p>
+                  提高用户停留时间、重复访问概率和地图工具的独立访问价值。
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section id="scope">
+            <h2>3. 本次范围</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>模块</th>
+                  <th>本次处理</th>
+                  <th>优先级</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>预习模式</td>
+                  <td>默认隐藏省份名称，点击地图区域后显示省份信息。</td>
+                  <td>高</td>
+                </tr>
+                <tr>
+                  <td>名称显示</td>
+                  <td>增加“显示省份名称”开关，用户可主动打开或关闭。</td>
+                  <td>高</td>
+                </tr>
+                <tr>
+                  <td>区域选择</td>
+                  <td>增加全部、华北、东北、华东、华中、华南、西南、西北区域筛选。</td>
+                  <td>高</td>
+                </tr>
+                <tr>
+                  <td>学习卡片</td>
+                  <td>右侧显示当前省份全称、类型、区域、行政中心和学习提示。</td>
+                  <td>高</td>
+                </tr>
+                <tr>
+                  <td>区域测试</td>
+                  <td>闯关考试支持按区域出题，选择华东则只考华东。</td>
+                  <td>中高</td>
+                </tr>
+                <tr>
+                  <td>错题复习</td>
+                  <td>保持现有逻辑，暂不按区域过滤错题。</td>
+                  <td>中</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section id="preview">
+            <h2>4. 预习模式设计</h2>
+            <p>
+              预习模式的主交互从“看列表”调整为“点地图”。右侧区域从省份长列表改为学习控制面板。
+            </p>
+            <div class="timeline">
+              <div class="timeline-item">
+                <strong>默认状态</strong>
+                <p>地图不显示省份名称，右侧提示“点击地图上的省份查看信息”。</p>
+              </div>
+              <div class="timeline-item">
+                <strong>点击省份</strong>
+                <p>地图高亮当前省份，右侧显示省份全称、行政中心、区域和类型。</p>
+              </div>
+              <div class="timeline-item">
+                <strong>显示名称</strong>
+                <p>用户打开“显示省份名称”后，地图出现省份标签，用于对照复习。</p>
+              </div>
+              <div class="timeline-item">
+                <strong>切换下一个</strong>
+                <p>点击“上一个 / 下一个”后，按当前区域顺序切换学习对象并定位地图。</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="region">
+            <h2>5. 区域学习与测试</h2>
+            <p>
+              区域是本次迭代的核心学习单位。相比一次性学习全国，区域学习更符合记忆节奏，
+              也更适合手机端短时间练习。
+            </p>
+            <div class="tag-list" aria-label="区域列表">
+              <span>全部</span>
+              <span>华北</span>
+              <span>东北</span>
+              <span>华东</span>
+              <span>华中</span>
+              <span>华南</span>
+              <span>西南</span>
+              <span>西北</span>
+            </div>
+            <ul>
+              <li>预习模式选择区域后，只围绕当前区域进行上一个 / 下一个切换。</li>
+              <li>地图上非当前区域可以降低视觉权重，但仍允许点击查看信息。</li>
+              <li>考试模式选择区域后，题目只从该区域中抽取。</li>
+              <li>每日挑战仍默认使用全国范围，保持每日挑战的完整性。</li>
+            </ul>
+          </section>
+
+          <section id="flow">
+            <h2>6. 用户流程</h2>
+            <div class="flow">
+              <div>进入地图工具</div>
+              <div>选择预习学习</div>
+              <div>选择区域</div>
+              <div>点击地图省份</div>
+              <div>查看学习卡片</div>
+              <div>开始区域测试</div>
+            </div>
+            <p>
+              该流程将“认识地图”和“考试验证”连接起来。用户不需要理解复杂规则，只需要按照地图点击和区域按钮操作即可。
+            </p>
+          </section>
+
+          <section id="schedule">
+            <h2>7. 时间计划</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>阶段</th>
+                  <th>时间</th>
+                  <th>主要工作</th>
+                  <th>产出</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>第 1 天</td>
+                  <td>0.5-1 天</td>
+                  <td>调整预习 UI、增加名称开关、区域按钮、当前学习卡片。</td>
+                  <td>预习新版界面</td>
+                </tr>
+                <tr>
+                  <td>第 2 天</td>
+                  <td>1 天</td>
+                  <td>实现点击地图显示信息、区域筛选、上一个 / 下一个联动。</td>
+                  <td>完整预习交互</td>
+                </tr>
+                <tr>
+                  <td>第 3 天</td>
+                  <td>0.5-1 天</td>
+                  <td>实现区域测试、移动端适配、桌面端验证和线上发布。</td>
+                  <td>可上线版本</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section id="acceptance">
+            <h2>8. 验收标准</h2>
+            <ul class="check-list">
+              <li>预习模式默认不显示省份名称。</li>
+              <li>用户可以通过开关显示或隐藏省份名称。</li>
+              <li>点击地图任意省份后，右侧能显示该省份的完整信息。</li>
+              <li>当前选中的省份在地图上有明显高亮状态。</li>
+              <li>选择华东、华北等区域后，学习对象按区域切换。</li>
+              <li>区域测试只从所选区域出题。</li>
+              <li>每日挑战和错题复习不被本次改动破坏。</li>
+              <li>桌面端和手机端均无文字重叠、按钮溢出、横向滚动。</li>
+            </ul>
+          </section>
+
+          <section id="risks">
+            <h2>9. 风险与后续</h2>
+            <div class="callout">
+              <strong>主要风险</strong>
+              <p>
+                区域筛选和考试出题会影响现有闯关逻辑，需要重点验证题目数量、完成条件、错题记录和查看答案逻辑。
+              </p>
+            </div>
+            <p>后续可以继续扩展：</p>
+            <ul>
+              <li>为每个省份增加更具体的记忆提示。</li>
+              <li>增加“已掌握 / 需复习 / 未学习”的学习状态。</li>
+              <li>增加区域学习进度，例如“华东已学习 5/7”。</li>
+              <li>增加更适合儿童或新手的初级模式。</li>
+            </ul>
+          </section>
+        </article>
+      </div>
+    </main>
+    <script src="/static/focus-reminder-global.js"></script>
+</body>
+</html>

@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>省份真实地图游戏趣味化与增长迭代文档</title>
+    <link rel="stylesheet" href="doc-style.css" />
+  </head>
+  <body>
+    <main class="doc-shell">
+      <nav class="doc-nav" aria-label="文档导航">
+        <a href="../index.html">打开游戏</a>
+        <a href="index.html">文档首页</a>
+        <a href="design.html">基础设计</a>
+        <a href="fun-growth-iteration.html">趣味增长迭代</a>
+      </nav>
+      <div class="doc-layout">
+        <aside class="doc-sidebar" aria-label="本文目录">
+          <p>本文目录</p>
+          <ol>
+          <li><a href="#section-1">版本目标</a></li>
+          <li><a href="#section-2">产品定位</a></li>
+          <li><a href="#section-3">当前问题</a></li>
+          <li><a href="#section-4">设计原则</a></li>
+          <li><a href="#section-5">核心玩法迭代</a></li>
+          <li class="is-sub"><a href="#section-6">1. 闯关模式</a></li>
+          <li class="is-sub"><a href="#section-7">2. 每日挑战</a></li>
+          <li class="is-sub"><a href="#section-8">3. 探索图鉴</a></li>
+          <li class="is-sub"><a href="#section-9">4. 成就系统</a></li>
+          <li class="is-sub"><a href="#section-10">5. 成绩分享卡</a></li>
+          <li><a href="#section-11">新手体验</a></li>
+          <li><a href="#section-12">留存设计</a></li>
+          <li class="is-sub"><a href="#section-13">日留存</a></li>
+          <li class="is-sub"><a href="#section-14">周留存</a></li>
+          <li class="is-sub"><a href="#section-15">长期留存</a></li>
+          <li><a href="#section-16">增长设计</a></li>
+          <li class="is-sub"><a href="#section-17">分享增长</a></li>
+          <li class="is-sub"><a href="#section-18">内容增长</a></li>
+          <li class="is-sub"><a href="#section-19">SEO 增长</a></li>
+          <li><a href="#section-20">上线方案</a></li>
+          <li class="is-sub"><a href="#section-21">第一阶段：GitHub Pages</a></li>
+          <li class="is-sub"><a href="#section-22">第二阶段：独立域名</a></li>
+          <li class="is-sub"><a href="#section-23">第三阶段：轻量统计</a></li>
+          <li><a href="#section-24">指标体系</a></li>
+          <li class="is-sub"><a href="#section-25">北极星指标</a></li>
+          <li class="is-sub"><a href="#section-26">核心指标</a></li>
+          <li class="is-sub"><a href="#section-27">首版目标</a></li>
+          <li><a href="#section-28">迭代优先级</a></li>
+          <li class="is-sub"><a href="#section-29">V1：上线可传播版</a></li>
+          <li class="is-sub"><a href="#section-30">V2：每日回访版</a></li>
+          <li class="is-sub"><a href="#section-31">V3：长期收集版</a></li>
+          <li><a href="#section-32">风险与取舍</a></li>
+          <li><a href="#section-33">下一步行动</a></li>
+          </ol>
+        </aside>
+        <article class="doc-card">
+        <h1>省份真实地图游戏趣味化与增长迭代文档</h1>
+        <h2 id="section-1">版本目标</h2>
+        <p>把当前“点击省份看名称”的轻量工具，升级成一个有探索欲、复玩理由和分享传播点的地理小游戏。</p>
+        <p>核心目标：</p>
+        <ul>
+        <li>增加单次停留时长：让用户从“点一下看看”变成“再玩一局”。</li>
+        <li>增加次日回访：提供每日挑战、连续学习和可恢复进度。</li>
+        <li>增加新用户增长：让用户完成挑战后愿意分享成绩图或链接。</li>
+        <li>保持低门槛：打开即玩，不要求登录，不把教育产品做成复杂后台。</li>
+        </ul>
+        <h2 id="section-2">产品定位</h2>
+        <p>一句话定位：</p>
+        <blockquote>一个适合碎片时间玩的中国省级地图挑战游戏。</blockquote>
+        <p>目标用户：</p>
+        <ul>
+        <li>学生：想记省份、省会、区域位置。</li>
+        <li>家长/老师：想找一个轻量地理练习工具。</li>
+        <li>普通用户：想测测自己对中国地图熟不熟。</li>
+        <li>内容分享用户：愿意晒成绩、挑战朋友。</li>
+        </ul>
+        <h2 id="section-3">当前问题</h2>
+        <ul>
+        <li>主循环偏短：点击省份后反馈结束，缺少继续玩的牵引。</li>
+        <li>目标不够明确：随机挑战存在，但还没有“关卡、成绩、失败压力、完成奖励”。</li>
+        <li>复访理由弱：进度可保存，但没有每日目标或连续回访机制。</li>
+        <li>分享动机弱：没有可视化成绩卡，也没有“我超过了多少人/用了多久”的表达。</li>
+        <li>新手引导弱：第一次打开时，用户不知道最好怎么玩。</li>
+        </ul>
+        <h2 id="section-4">设计原则</h2>
+        <ul>
+        <li>趣味性来自挑战和反馈，不只是装饰。</li>
+        <li>每一局控制在 30 秒到 2 分钟，适合短时间重复游玩。</li>
+        <li>奖励优先奖励学习行为：完成一局、识别冷门省份、连续回访。</li>
+        <li>社交分享只展示结果，不要求用户注册。</li>
+        <li>不做过重排行榜，先做本地成绩和分享卡，降低开发和运营成本。</li>
+        </ul>
+        <p>参考依据：</p>
+        <ul>
+        <li>Interaction Design Foundation 对游戏化的建议强调：游戏化应增强用户体验，避免“魔法涂料”式地把徽章、积分硬贴上去。参考：<a href="https://www.interaction-design.org/literature/topics/gamification">https://www.interaction-design.org/literature/topics/gamification</a></li>
+        <li>Duolingo 的公开文章多次提到 streak 对学习回访的作用，也强调新用户需要理解 streak 的意义。参考：<a href="https://blog.duolingo.com/how-duolingo-streak-builds-habit/">https://blog.duolingo.com/how-duolingo-streak-builds-habit/</a> 和 <a href="https://blog.duolingo.com/improving-the-streak/">https://blog.duolingo.com/improving-the-streak/</a></li>
+        <li>Amplitude 的留存分析建议围绕关键事件衡量用户回访，例如首次完成核心动作后的 D1/D7/D30 留存。参考：<a href="https://amplitude.com/docs/analytics/charts/retention-analysis/retention-analysis-build">https://amplitude.com/docs/analytics/charts/retention-analysis/retention-analysis-build</a></li>
+        </ul>
+        <h2 id="section-5">核心玩法迭代</h2>
+        <h3 id="section-6">1. 闯关模式</h3>
+        <p>新增“闯关”作为默认入口，而不是让用户只自由点击。</p>
+        <p>玩法：</p>
+        <ul>
+        <li>每关 10 题。</li>
+        <li>系统显示目标省份，用户点击地图。</li>
+        <li>正确加分，错误给出正确位置并扣一点时间。</li>
+        <li>结束后给出星级评价。</li>
+        </ul>
+        <p>评分：</p>
+        <ul>
+        <li>基础分：答对 1 题 +100。</li>
+        <li>连击分：连续答对 3、5、10 题有加成。</li>
+        <li>时间分：剩余时间越多，奖励越高。</li>
+        <li>错误惩罚：错误不结束，但影响星级。</li>
+        </ul>
+        <p>价值：</p>
+        <ul>
+        <li>单局有明确目标和终点。</li>
+        <li>用户更容易进入“再来一次”的状态。</li>
+        <li>适合生成分享成绩。</li>
+        </ul>
+        <p>优先级：P0</p>
+        <h3 id="section-7">2. 每日挑战</h3>
+        <p>每天固定一套挑战题，所有用户当天题目一致。</p>
+        <p>玩法：</p>
+        <ul>
+        <li>每日 12 题。</li>
+        <li>题型混合：找省份、找省会、找区域。</li>
+        <li>每天只能记录一次最佳成绩。</li>
+        <li>完成后显示“今日完成”和连续天数。</li>
+        </ul>
+        <p>价值：</p>
+        <ul>
+        <li>给用户一个回来的理由。</li>
+        <li>适合朋友圈、小红书、微信群传播：“今天你几分？”</li>
+        </ul>
+        <p>优先级：P0</p>
+        <h3 id="section-8">3. 探索图鉴</h3>
+        <p>把已发现省份变成可收集的图鉴。</p>
+        <p>内容：</p>
+        <ul>
+        <li>省份卡片：简称、全称、省会、区域。</li>
+        <li>冷知识一句话：例如地理位置、地貌、邻省数量。</li>
+        <li>完成一个区域后解锁区域徽章。</li>
+        </ul>
+        <p>价值：</p>
+        <ul>
+        <li>自由探索不再只是点击，而是收集。</li>
+        <li>为教育价值补一层内容。</li>
+        </ul>
+        <p>优先级：P1</p>
+        <h3 id="section-9">4. 成就系统</h3>
+        <p>成就不要太多，先做少而清楚的 12 个。</p>
+        <p>示例：</p>
+        <ul>
+        <li>初识地图：完成第一次点击。</li>
+        <li>十连正确：一局内连续答对 10 题。</li>
+        <li>华东通：华东区域全部答对。</li>
+        <li>边疆观察员：正确识别新疆、西藏、内蒙古、黑龙江。</li>
+        <li>今日不迷路：完成每日挑战。</li>
+        <li>七日巡图：连续 7 天完成每日挑战。</li>
+        </ul>
+        <p>价值：</p>
+        <ul>
+        <li>给中长期用户目标。</li>
+        <li>提供分享文案。</li>
+        </ul>
+        <p>优先级：P1</p>
+        <h3 id="section-10">5. 成绩分享卡</h3>
+        <p>挑战结束后生成一张图片式成绩卡。</p>
+        <p>内容：</p>
+        <ul>
+        <li>游戏名</li>
+        <li>今日挑战日期</li>
+        <li>分数、正确率、用时、最高连击</li>
+        <li>一句轻松评价</li>
+        <li>二维码或项目链接</li>
+        </ul>
+        <p>文案风格：</p>
+        <ul>
+        <li>“我在 48 秒内找完 12 个省份”</li>
+        <li>“中国地图熟练度：87%”</li>
+        <li>“今天没有在华北迷路”</li>
+        </ul>
+        <p>价值：</p>
+        <ul>
+        <li>低成本获客。</li>
+        <li>不依赖用户登录和关系链。</li>
+        </ul>
+        <p>优先级：P0</p>
+        <h2 id="section-11">新手体验</h2>
+        <p>首次打开时显示 3 步轻引导：</p>
+        <ul>
+        <li>点地图上的省份。</li>
+        <li>挑战模式会随机给目标。</li>
+        <li>完成后可以保存或分享成绩。</li>
+        </ul>
+        <p>不使用大段说明，做成浮层提示，用户点击一次即可关闭。</p>
+        <p>首局默认推荐“快速挑战”，不要让用户先做选择题。</p>
+        <h2 id="section-12">留存设计</h2>
+        <h3 id="section-13">日留存</h3>
+        <p>机制：</p>
+        <ul>
+        <li>每日挑战</li>
+        <li>连续完成天数</li>
+        <li>每日一句地图冷知识</li>
+        </ul>
+        <p>注意：</p>
+        <ul>
+        <li>连续天数要温和，不要让用户有强压力。</li>
+        <li>可以提供“补签卡”，但先不做账号系统时只存在本地。</li>
+        </ul>
+        <h3 id="section-14">周留存</h3>
+        <p>机制：</p>
+        <ul>
+        <li>每周主题：沿海省份周、西部省份周、省会速记周。</li>
+        <li>每周徽章：完成 5 天每日挑战即可获得。</li>
+        </ul>
+        <h3 id="section-15">长期留存</h3>
+        <p>机制：</p>
+        <ul>
+        <li>全国图鉴完成度</li>
+        <li>分区域熟练度</li>
+        <li>个人最佳成绩历史</li>
+        </ul>
+        <h2 id="section-16">增长设计</h2>
+        <h3 id="section-17">分享增长</h3>
+        <p>核心传播点：</p>
+        <ul>
+        <li>成绩卡</li>
+        <li>每日挑战统一题目</li>
+        <li>“邀请朋友挑战同一套题”</li>
+        </ul>
+        <p>落地方式：</p>
+        <ul>
+        <li>Web Share API：手机端优先调用系统分享。</li>
+        <li>Canvas 生成成绩卡：浏览器内生成图片。</li>
+        <li>分享链接带参数：例如 <code>?challenge=2026-05-18</code>。</li>
+        </ul>
+        <h3 id="section-18">内容增长</h3>
+        <p>可发布内容：</p>
+        <ul>
+        <li>“每天 1 分钟练中国地图”</li>
+        <li>“你能在 60 秒内找出这 12 个省份吗？”</li>
+        <li>“中国省份冷知识挑战”</li>
+        </ul>
+        <p>适合渠道：</p>
+        <ul>
+        <li>小红书：成绩卡和冷知识截图。</li>
+        <li>B 站/抖音：限时挑战录屏。</li>
+        <li>微信群：每日挑战链接。</li>
+        </ul>
+        <h3 id="section-19">SEO 增长</h3>
+        <p>页面需要补充：</p>
+        <ul>
+        <li>标题：省份地图小游戏_中国地图省份练习</li>
+        <li>描述：中国省级行政区互动地图，支持省份识别、省会练习、每日挑战。</li>
+        <li>结构化内容：省份列表、省会列表、玩法说明。</li>
+        </ul>
+        <h2 id="section-20">上线方案</h2>
+        <h3 id="section-21">第一阶段：GitHub Pages</h3>
+        <p>目标：</p>
+        <ul>
+        <li>快速拿到可访问链接。</li>
+        <li>适合当前纯静态项目。</li>
+        </ul>
+        <p>任务：</p>
+        <ul>
+        <li>配置 GitHub Pages。</li>
+        <li>确认 <code>index.html</code> 可直接作为首页。</li>
+        <li>添加 README 里的线上访问链接。</li>
+        </ul>
+        <h3 id="section-22">第二阶段：独立域名</h3>
+        <p>目标：</p>
+        <ul>
+        <li>方便传播和 SEO。</li>
+        </ul>
+        <p>建议域名方向：</p>
+        <ul>
+        <li><code>maphub.fun</code></li>
+        <li><code>shengfenmap.com</code></li>
+        <li><code>mapquiz.cn</code></li>
+        </ul>
+        <h3 id="section-23">第三阶段：轻量统计</h3>
+        <p>先接入隐私友好的统计或自托管统计。</p>
+        <p>事件埋点：</p>
+        <ul>
+        <li><code>app_open</code></li>
+        <li><code>province_click</code></li>
+        <li><code>quick_challenge_start</code></li>
+        <li><code>quick_challenge_finish</code></li>
+        <li><code>daily_challenge_start</code></li>
+        <li><code>daily_challenge_finish</code></li>
+        <li><code>share_card_generate</code></li>
+        <li><code>share_click</code></li>
+        </ul>
+        <h2 id="section-24">指标体系</h2>
+        <h3 id="section-25">北极星指标</h3>
+        <p>每周完成挑战用户数。</p>
+        <p>原因：</p>
+        <ul>
+        <li>只点击地图不代表用户真正玩起来。</li>
+        <li>完成挑战同时反映趣味性、学习性和停留时长。</li>
+        </ul>
+        <h3 id="section-26">核心指标</h3>
+        <ul>
+        <li>新用户首局完成率</li>
+        <li>平均单次停留时长</li>
+        <li>人均挑战局数</li>
+        <li>D1 留存</li>
+        <li>D7 留存</li>
+        <li>分享卡生成率</li>
+        <li>分享链接访问转化率</li>
+        </ul>
+        <h3 id="section-27">首版目标</h3>
+        <ul>
+        <li>新用户首局完成率：大于 45%</li>
+        <li>平均停留时长：大于 90 秒</li>
+        <li>人均挑战局数：大于 1.5</li>
+        <li>分享卡生成率：大于 8%</li>
+        </ul>
+        <h2 id="section-28">迭代优先级</h2>
+        <h3 id="section-29">V1：上线可传播版</h3>
+        <p>目标：让用户能玩一局、看到成绩、愿意分享。</p>
+        <p>范围：</p>
+        <ul>
+        <li>快速挑战 10 题</li>
+        <li>倒计时和连击</li>
+        <li>成绩页</li>
+        <li>分享成绩卡</li>
+        <li>GitHub Pages 上线</li>
+        <li>基础 SEO</li>
+        </ul>
+        <h3 id="section-30">V2：每日回访版</h3>
+        <p>目标：让用户明天回来。</p>
+        <p>范围：</p>
+        <ul>
+        <li>每日挑战</li>
+        <li>连续完成天数</li>
+        <li>本地最佳成绩</li>
+        <li>每日冷知识</li>
+        </ul>
+        <h3 id="section-31">V3：长期收集版</h3>
+        <p>目标：让用户持续补全。</p>
+        <p>范围：</p>
+        <ul>
+        <li>省份图鉴</li>
+        <li>区域徽章</li>
+        <li>成就系统</li>
+        <li>熟练度热力图</li>
+        </ul>
+        <h2 id="section-32">风险与取舍</h2>
+        <ul>
+        <li>排行榜先不做：没有账号系统时容易失真，也会增加隐私和反作弊成本。</li>
+        <li>在线底图先不做：中国地图叠在线底图可能涉及坐标偏移和加载稳定性，当前边界地图足够支撑游戏。</li>
+        <li>内容冷知识要谨慎：地理与行政信息需要可校对，避免不准确内容被传播。</li>
+        <li>游戏化不要过火：积分和徽章服务于学习与挑战，不要让用户只为了数字而点。</li>
+        </ul>
+        <h2 id="section-33">下一步行动</h2>
+        <p>建议下一轮直接实现 V1：</p>
+        <ol>
+        <li>把“随机挑战”升级为“快速挑战 10 题”。</li>
+        <li>增加倒计时、连击、正确率和结算页。</li>
+        <li>用 Canvas 生成成绩分享卡。</li>
+        <li>配置 GitHub Pages，让项目有正式访问链接。</li>
+        <li>README 增加线上地址和玩法截图。</li>
+        </ol>
+      </article>
+      </div>
+    </main>
+    <script src="/static/focus-reminder-global.js"></script>
+</body>
+</html>

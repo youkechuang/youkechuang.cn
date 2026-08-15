@@ -5,6 +5,86 @@ const runInitScripts = [
     // ['/path/to/example/', initWhenFirstLoaded, initWhenPageLoaded]
 ];
 
+/******************** site-wide focus reminder ********************/
+
+function initFocusReminderGlobal() {
+    if (document.querySelector('script[src="/static/focus-reminder-global.js"]')) {
+        return;
+    }
+    gitsite.loadScript('/static/focus-reminder-global.js');
+}
+
+runInitScripts.push(['/', initFocusReminderGlobal, null]);
+
+/******************** blog page views ********************/
+
+function initBlogPageViews() {
+    const info = document.querySelector('#gsi-blog-info');
+    if (!info) {
+        return;
+    }
+
+    let badge = info.querySelector('.gsi-blog-views');
+    if (!badge) {
+        badge = document.createElement('span');
+        badge.className = 'gsi-blog-views';
+        badge.innerHTML = '<span class="gsi-blog-views-dot">·</span><span class="gsi-blog-views-text">浏览量读取中</span>';
+        info.appendChild(badge);
+    }
+
+    const textEl = badge.querySelector('.gsi-blog-views-text');
+    loadPageViewStats()
+        .then((stats) => {
+            const viewInfo = getCurrentPageViewInfo(stats);
+            const views = viewInfo ? viewInfo.views : 0;
+            textEl.textContent = `${views} 次浏览`;
+        })
+        .catch(() => {
+            textEl.textContent = '浏览量暂不可用';
+        });
+}
+
+function loadPageViewStats() {
+    if (!window.__page_view_stats_promise__) {
+        window.__page_view_stats_promise__ = fetch('/_analytics/stats.json', { cache: 'no-store' })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`stats request failed: ${response.status}`);
+                }
+                return response.json();
+            });
+    }
+    return window.__page_view_stats_promise__;
+}
+
+function getCurrentPageViewInfo(stats) {
+    const pageViews = stats && stats.pageViews ? stats.pageViews : {};
+    for (const path of getCurrentPageViewCandidates()) {
+        if (pageViews[path]) {
+            return pageViews[path];
+        }
+    }
+    return null;
+}
+
+function getCurrentPageViewCandidates() {
+    const path = location.pathname || '/';
+    const candidates = new Set([path]);
+    if (path.endsWith('/index.html')) {
+        candidates.add(path.slice(0, -'index.html'.length).replace(/\/$/, '') || '/');
+        candidates.add(path.slice(0, -'index.html'.length));
+    } else if (path.endsWith('/')) {
+        candidates.add(path.slice(0, -1) || '/');
+        candidates.add(`${path}index.html`);
+    } else {
+        candidates.add(`${path}/`);
+        candidates.add(`${path}/index.html`);
+    }
+    return [...candidates];
+}
+
+runInitScripts.push(['/blogs/', initBlogPageViews, initBlogPageViews]);
+
 /******************** copy code to clipboard ********************/
 
 function initCopyCode() {

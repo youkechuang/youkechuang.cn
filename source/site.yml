@@ -15,6 +15,14 @@ site:
       uri: /books/onethird/index.html
     - title: 博客
       uri: /blogs/all/index.html
+    - title: 地图
+      uri: /static/maphub/index.html
+    - title: 15分钟记录
+      uri: /static/focus/index.html
+    - title: 创业专题
+      uri: /static/startup/index.html
+    - title: 文档
+      uri: /static/docs/product.html
   git:
     base-url: https://github.com/youkechaung/youkechuang.cn/blob/main/source
   contact:
@@ -42,7 +50,7 @@ site:
       # 创建站点后，在设置中可以看到你的 shortname
       name: kechuangyou
     analytics:
-      provider: goatcounter
+      # provider: goatcounter
       # GoatCounter 站点代码
       # 获取方式：
       # 1. 访问 https://www.goatcounter.com/ 注册账号（免费）
@@ -64,6 +72,7 @@ build:
   copy:
     - favicon.ico
     - robots.txt
+    - sitemap.xml
     - ads.txt
 
 # you can add any items:

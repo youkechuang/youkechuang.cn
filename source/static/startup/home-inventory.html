@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>家庭物品管理系统产品文档</title>
+  <style>
+    :root {
+      --bg: #f7f8f5;
+      --panel: #ffffff;
+      --ink: #1f2923;
+      --muted: #657169;
+      --line: #dfe5dd;
+      --brand: #216b5f;
+      --brand-2: #b85c38;
+      --soft: #eef3ee;
+      --soft-2: #f7ece5;
+      --code: #eef0ed;
+      --shadow: 0 10px 28px rgba(31, 41, 35, 0.08);
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.72;
+    }
+    a { color: inherit; }
+    .layout { display: grid; grid-template-columns: 284px minmax(0, 1fr); min-height: 100vh; }
+    aside {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+      padding: 28px 22px;
+      background: #17231f;
+      color: #eef4f0;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .brand { margin-bottom: 24px; }
+    .brand strong { display: block; font-size: 18px; letter-spacing: 0; }
+    .brand span { display: block; margin-top: 6px; color: #aebdb5; font-size: 13px; line-height: 1.5; }
+    nav a {
+      display: block;
+      padding: 9px 10px;
+      margin: 2px 0;
+      border-radius: 6px;
+      color: #dce6e1;
+      text-decoration: none;
+      font-size: 14px;
+      line-height: 1.35;
+    }
+    nav a:hover { background: rgba(255,255,255,0.08); color: #fff; }
+    main { max-width: 1120px; width: 100%; padding: 44px 52px 80px; }
+    .hero {
+      padding: 34px 36px;
+      background: linear-gradient(135deg, #ffffff 0%, #eef3ee 58%, #f7ece5 100%);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .eyebrow { margin: 0 0 10px; color: var(--brand); font-weight: 700; font-size: 14px; }
+    h1 { margin: 0; font-size: 36px; line-height: 1.18; letter-spacing: 0; }
+    .subtitle { max-width: 820px; margin: 16px 0 0; color: var(--muted); font-size: 17px; }
+    section { margin-top: 34px; padding: 30px 32px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); }
+    h2 { margin: 0 0 18px; font-size: 25px; line-height: 1.28; letter-spacing: 0; }
+    h3 { margin: 24px 0 10px; font-size: 18px; }
+    p { margin: 10px 0; }
+    ul, ol { padding-left: 22px; margin: 10px 0 0; }
+    li { margin: 6px 0; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .card { border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; background: #fff; }
+    .card strong { display: block; margin-bottom: 6px; }
+    .tag { display: inline-block; padding: 2px 8px; margin-right: 6px; border-radius: 999px; background: var(--soft); color: var(--brand); font-size: 12px; font-weight: 700; }
+    .tag.alt { background: var(--soft-2); color: var(--brand-2); }
+    table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 14px; }
+    th, td { padding: 11px 12px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: var(--soft); font-weight: 700; }
+    code { background: var(--code); padding: 2px 5px; border-radius: 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .note { padding: 14px 16px; background: var(--soft); border-left: 4px solid var(--brand); border-radius: 6px; color: #314139; }
+    .flow { counter-reset: step; display: grid; gap: 10px; margin-top: 14px; }
+    .flow div { position: relative; padding: 13px 14px 13px 48px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+    .flow div::before { counter-increment: step; content: counter(step); position: absolute; left: 14px; top: 13px; width: 24px; height: 24px; border-radius: 50%; background: var(--brand); color: #fff; text-align: center; line-height: 24px; font-weight: 700; font-size: 13px; }
+    .moment { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 12px; align-items: start; padding: 14px 0; border-top: 1px solid var(--line); }
+    .moment:first-child { border-top: 0; }
+    .moment b { color: var(--brand); }
+    .scoreboard { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
+    .scoreboard div { padding: 14px; border-radius: var(--radius); background: var(--soft); border: 1px solid var(--line); }
+    .scoreboard strong { display: block; font-size: 22px; line-height: 1.2; color: var(--brand); }
+    .small { color: var(--muted); font-size: 14px; }
+    @media (max-width: 860px) {
+      .layout { grid-template-columns: 1fr; }
+      aside { position: static; height: auto; }
+      nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; }
+      main { padding: 24px 16px 56px; }
+      .hero, section { padding: 22px 18px; }
+      h1 { font-size: 28px; }
+      .grid, .grid.three { grid-template-columns: 1fr; }
+      .moment, .scoreboard { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside>
+      <div class="brand">
+        <strong>家庭物品管理系统 PRD</strong>
+        <span>面向家庭收纳、寻找、保修、搬家与保险理赔的实用型产品方案</span>
+      </div>
+      <nav aria-label="目录">
+        <a href="#summary">1. 产品摘要</a>
+        <a href="#research">2. 竞品参考</a>
+        <a href="#problem">3. 问题与机会</a>
+        <a href="#positioning">4. 产品定位</a>
+        <a href="#users">5. 用户与场景</a>
+        <a href="#scope">6. 功能范围</a>
+        <a href="#ia">7. 信息架构</a>
+        <a href="#flows">8. 核心流程</a>
+        <a href="#features">9. 功能详述</a>
+        <a href="#ai">10. AI 与自动化</a>
+        <a href="#data">11. 数据模型</a>
+        <a href="#delight">12. 爽感体验设计</a>
+        <a href="#baidu-vision">13. 多物品识别技术方案</a>
+        <a href="#barcode-plan">13A. 条形码识别方案</a>
+        <a href="#ux">14. 交互设计</a>
+        <a href="#ios-web">15. iOS / 网站形态</a>
+        <a href="#privacy">16. 隐私与安全</a>
+        <a href="#mvp">17. MVP 规划</a>
+        <a href="#metrics">18. 指标与验收</a>
+        <a href="#risks">19. 风险与取舍</a>
+        <a href="#roadmap">20. 路线图</a>
+      </nav>
+    </aside>
+
+    <main>
+      <header class="hero">
+        <p class="eyebrow">Product Requirements Document</p>
+        <h1>家庭物品管理系统：让家里的每件东西都能被快速记录、找到、维护和处理</h1>
+        <p class="subtitle">本产品不是把家变成仓库系统，而是帮助普通家庭用最低成本建立“可搜索的家”。核心目标是：快速录入、清楚知道放在哪、需要时找得到、保修票据不丢、搬家和理赔时能导出。</p>
+      </header>
+
+      <section id="summary">
+        <h2>1. 产品摘要</h2>
+        <p>产品暂定名：<strong>家物管家</strong>。它可以先做成 iOS App，也可以做成响应式网站 / PWA。建议第一版优先 iOS App，因为家庭物品录入高度依赖手机拍照、扫码、离线使用、系统相册和推送提醒；同时保留 Web 管理端，用于批量编辑、导出和家庭成员协作。</p>
+        <div class="grid three">
+          <div class="card"><strong>一句话价值</strong>把家里的物品、位置、票据、保修、去向和处理计划统一管理。</div>
+          <div class="card"><strong>首要体验</strong>打开相机拍照，30 秒内完成一件物品或一个箱子的建档。</div>
+          <div class="card"><strong>核心差异</strong>以“找东西”和“减少东西”为中心，而不是只做资产清单。</div>
+          <div class="card"><strong>爽感目标</strong>用户每次打开 App 都能在 10 秒内完成一个明确动作：找到、记录、移动、提醒或处理。</div>
+        </div>
+      </section>
+
+      <section id="research">
+        <h2>2. 竞品参考</h2>
+        <p>参考现有家庭库存与物品管理产品后，可以归纳出几类成熟能力：</p>
+        <table>
+          <thead><tr><th>产品 / 类型</th><th>值得参考</th><th>不足或机会</th></tr></thead>
+          <tbody>
+            <tr><td>NAIC Home Inventory</td><td>面向保险理赔，支持按房间 / 类别记录、拍照、条码扫描、导出清单。</td><td>更像灾备清单，日常找东西、收纳维护、家庭协作能力较弱。</td></tr>
+            <tr><td>Sortly</td><td>视觉库存、文件夹、标签、二维码 / 条码、照片、报表与多端管理成熟。</td><td>偏商业库存，家庭用户可能觉得太重、订阅成本高。</td></tr>
+            <tr><td>Itemtopia</td><td>支持空间、物品、人员、票据、保修、文件、提醒、离线同步。</td><td>覆盖面广，但普通家庭第一次使用时可能不知道从哪里开始。</td></tr>
+            <tr><td>HomeBox / 自托管类</td><td>重视隐私、自主备份、可自定义字段，适合技术用户。</td><td>部署和维护门槛高，不适合普通家庭成员共同使用。</td></tr>
+            <tr><td>表格 / Notion / Airtable</td><td>灵活、可导出、适合轻量试用。</td><td>拍照、扫码、位置层级、提醒和移动端快速录入体验不足。</td></tr>
+          </tbody>
+        </table>
+        <p class="small">参考来源包括 NAIC 官方家庭库存说明、Sortly 产品介绍、Itemtopia 官网功能说明，以及 2026 年家庭库存应用对比文章。本文只抽象产品模式，不复制任何竞品界面。</p>
+      </section>
+
+      <section id="problem">
+        <h2>3. 问题与机会</h2>
+        <h3>用户真实痛点</h3>
+        <ul>
+          <li>东西太多，靠记忆找不到，尤其是柜子、抽屉、储物箱、床底、车库、仓库。</li>
+          <li>买过但忘了，重复购买，造成浪费。</li>
+          <li>票据、说明书、保修卡散落，维修时找不到。</li>
+          <li>搬家、断舍离、出租房、装修、保险理赔时，临时整理成本极高。</li>
+          <li>家人之间信息不透明，一个人知道东西在哪，其他人仍然找不到。</li>
+        </ul>
+        <h3>产品机会</h3>
+        <p>大多数库存系统强调“完整记录”，但家庭场景更需要“低负担持续使用”。因此设计上应把完整性放在第二位，把快速记录、快速查找、位置表达和提醒放在第一位。</p>
+      </section>
+
+      <section id="positioning">
+        <h2>4. 产品定位</h2>
+        <div class="note">定位：家庭空间的轻量库存系统 + 收纳位置地图 + 保修票据保险档案 + 断舍离助手。</div>
+        <h3>产品原则</h3>
+        <ul>
+          <li><strong>先能找到，再追求完整。</strong>一件物品最低只需要名称、照片、位置即可入库。</li>
+          <li><strong>位置比分类更重要。</strong>分类帮助浏览，位置解决“去哪拿”。</li>
+          <li><strong>一箱多物是刚需。</strong>家里很多东西不是单件摆放，而是被放进盒子、袋子、柜格。</li>
+          <li><strong>少打字。</strong>拍照识别、语音录入、扫码、模板和批量操作要优先。</li>
+          <li><strong>可导出，不绑架。</strong>用户必须能随时导出 CSV / PDF / 图片包。</li>
+        </ul>
+      </section>
+
+      <section id="users">
+        <h2>5. 用户与场景</h2>
+        <div class="grid">
+          <div class="card"><strong>普通家庭</strong>管理日用品、工具、药品、证件、家电、衣物、玩具、囤货。目标是找东西和少买重复品。</div>
+          <div class="card"><strong>搬家 / 装修用户</strong>给箱子贴二维码，记录箱内物品和新家目标位置。目标是减少搬家混乱。</div>
+          <div class="card"><strong>收藏爱好者</strong>管理相机、模型、书籍、酒、首饰、手办等。目标是记录价值、状态、来源和附件。</div>
+          <div class="card"><strong>保险 / 租房用户</strong>记录贵重物品、购买凭证、序列号。目标是出险或纠纷时有证据。</div>
+        </div>
+      </section>
+
+      <section id="scope">
+        <h2>6. 功能范围</h2>
+        <h3>MVP 必须有</h3>
+        <ul>
+          <li>物品快速添加：拍照、名称、数量、位置、分类。</li>
+          <li>位置体系：房屋、房间、柜子、抽屉、箱子、格子。</li>
+          <li>搜索与筛选：名称、分类、位置、标签、状态。</li>
+          <li>箱子 / 容器管理：一个容器可包含多个物品，可生成二维码。</li>
+          <li>照片、票据、保修日期、提醒。</li>
+          <li>家庭成员共享与只读 / 可编辑权限。</li>
+          <li>CSV / PDF 导出，适合搬家和保险。</li>
+        </ul>
+        <h3>暂不做或后置</h3>
+        <ul>
+          <li>复杂采购审批、仓库调拨、企业级库存成本核算。</li>
+          <li>二手交易平台闭环。</li>
+          <li>完全自动识别全屋所有物品。AI 可以辅助，但不能作为第一版核心承诺。</li>
+        </ul>
+      </section>
+
+      <section id="ia">
+        <h2>7. 信息架构</h2>
+        <table>
+          <thead><tr><th>一级模块</th><th>主要内容</th><th>用户问题</th></tr></thead>
+          <tbody>
+            <tr><td>首页</td><td>最近添加、常用位置、即将过期保修、待处理物品、总估值。</td><td>我现在需要关注什么？</td></tr>
+            <tr><td>物品</td><td>全部物品列表、分类、标签、批量编辑。</td><td>我有什么？</td></tr>
+            <tr><td>位置</td><td>房间、柜子、抽屉、箱子、储物间层级。</td><td>东西放在哪？</td></tr>
+            <tr><td>扫码</td><td>扫描二维码 / 条码，查看箱内物品或补充商品信息。</td><td>这个箱子里有什么？</td></tr>
+            <tr><td>提醒</td><td>保修、保质期、借出归还、清理计划。</td><td>什么快到期或该处理？</td></tr>
+            <tr><td>报表</td><td>总价值、分类价值、保险清单、搬家清单、断舍离清单。</td><td>如何导出和决策？</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="flows">
+        <h2>8. 核心流程</h2>
+        <h3>快速录入单件物品</h3>
+        <div class="flow">
+          <div>点击“添加”，拍照或从相册选图。</div>
+          <div>系统识别可能的物品名称、品牌、类别，用户一键确认或修改。</div>
+          <div>选择位置，例如“主卧 / 衣柜 / 上层抽屉”。</div>
+          <div>可选填写数量、价值、购买日期、票据、保修。</div>
+          <div>保存后自动进入最近添加，并可继续添加下一件。</div>
+        </div>
+        <h3>整理一个箱子</h3>
+        <div class="flow">
+          <div>新建容器，命名为“搬家箱 A12”或“冬季衣物箱”。</div>
+          <div>连续拍照录入箱内物品，支持一张照片识别多个物品。</div>
+          <div>系统生成二维码，用户打印或手写编号贴在箱子上。</div>
+          <div>扫描二维码即可看到箱内清单、照片和目标房间。</div>
+        </div>
+      </section>
+
+      <section id="features">
+        <h2>9. 功能详述</h2>
+        <h3>9.1 物品档案</h3>
+        <p>字段分为基础字段和增强字段。基础字段包括名称、照片、位置、数量、分类、状态；增强字段包括品牌、型号、序列号、尺寸、颜色、价值、购买日期、购买渠道、票据、说明书、保修、备注。</p>
+        <h3>9.2 位置地图</h3>
+        <p>位置采用树状结构：家庭 / 房屋 → 房间 → 家具 → 层板 / 抽屉 / 箱子。位置页面要像“家里的地图”，而不是普通文件夹列表。每个位置显示物品数量、估值、最近更新和未整理数量。</p>
+        <h3>9.3 容器与二维码</h3>
+        <p>容器是特殊位置，可以被移动。比如“透明收纳箱 3 号”既可以在储物间，也可以搬到新家客厅。二维码链接到容器详情，支持离线缓存。</p>
+        <h3>9.4 搜索</h3>
+        <p>搜索必须容错，支持拼音、模糊匹配、同义词和照片识别结果。搜索结果优先显示“位置路径”和“最后确认时间”，因为用户搜索时最关心如何拿到。</p>
+        <h3>9.5 票据与保修</h3>
+        <p>用户可以拍摄发票、订单截图、保修卡。系统提取购买日期、价格、店铺和保修期限，并在到期前提醒。适合家电、数码、家具和贵重物品。</p>
+        <h3>9.6 状态管理</h3>
+        <p>建议内置状态：在用、闲置、借出、待维修、待出售、待捐赠、已丢弃。状态不是复杂流程，而是帮助用户减少东西。</p>
+        <h3>9.7 家庭协作</h3>
+        <p>家庭成员可以加入同一个家庭空间。权限分为管理员、可编辑成员、只读成员。每次移动或删除物品都记录操作人和时间，避免家庭协作时信息混乱。</p>
+      </section>
+
+      <section id="ai">
+        <h2>10. AI 与自动化</h2>
+        <p>AI 应作为降低录入成本的助手，而不是制造复杂感的卖点。</p>
+        <div class="grid">
+          <div class="card"><strong>图片识别</strong>从照片中建议名称、类别、颜色、品牌和可能数量。</div>
+          <div class="card"><strong>票据识别</strong>从发票、订单截图提取价格、日期、商家和保修相关信息。</div>
+          <div class="card"><strong>自然语言录入</strong>用户说“把蓝色工具箱放到阳台柜第二层，里面有螺丝刀和卷尺”，系统自动拆成位置和物品。</div>
+          <div class="card"><strong>整理建议</strong>发现重复物品、长期未使用物品、即将过期物品，生成清理清单。</div>
+        </div>
+      </section>
+
+      <section id="data">
+        <h2>11. 数据模型</h2>
+        <table>
+          <thead><tr><th>实体</th><th>关键字段</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td>Household</td><td>id, name, owner_id, plan, created_at</td><td>家庭空间。</td></tr>
+            <tr><td>Location</td><td>id, household_id, parent_id, name, type, qr_code</td><td>房间、柜子、抽屉、箱子都属于位置。</td></tr>
+            <tr><td>Item</td><td>id, name, category_id, location_id, quantity, status, value</td><td>核心物品记录。</td></tr>
+            <tr><td>Attachment</td><td>id, item_id, type, file_url, ocr_text</td><td>照片、票据、说明书、保修文件。</td></tr>
+            <tr><td>Reminder</td><td>id, item_id, type, due_date, repeat_rule</td><td>保修、保质期、归还、维护提醒。</td></tr>
+            <tr><td>ActivityLog</td><td>id, actor_id, action, target_type, target_id, created_at</td><td>协作和审计记录。</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="delight">
+        <h2>12. 爽感体验设计</h2>
+        <p>这个产品要让用户觉得“终于有人替我把家里的混乱变简单了”。爽感不来自花哨动画，而来自少思考、少打字、少等待、少返工，以及每一步都能立刻解决生活问题。</p>
+        <div class="scoreboard">
+          <div><strong>3 秒</strong>打开后能搜索、扫码或拍照。</div>
+          <div><strong>10 秒</strong>搜索结果给出明确位置答案。</div>
+          <div><strong>30 秒</strong>完成一件物品的最小建档。</div>
+          <div><strong>15 分钟</strong>完成一个抽屉或箱子的整理任务。</div>
+        </div>
+
+        <h3>12.1 让第一次使用就顺</h3>
+        <ul>
+          <li><strong>本地先用：</strong>允许用户不注册先记录 20 件物品，等用户感到有价值后再引导创建账号和云同步。</li>
+          <li><strong>三种起步方式：</strong>整理一个箱子、整理一个抽屉、记录贵重物品。不要让用户面对一个空系统自己规划。</li>
+          <li><strong>样例家庭空间：</strong>默认给出客厅、卧室、厨房、卫生间、储物间、阳台等常见位置，用户只需要删改。</li>
+          <li><strong>不用先建分类：</strong>分类由系统建议，用户可以以后再整理；第一天只要把东西拍进去。</li>
+        </ul>
+
+        <h3>12.2 六个关键爽点</h3>
+        <div class="moment">
+          <b>一拍多物</b>
+          <span>拍一张抽屉、柜子或箱子的照片，系统自动框出多个候选物品，用户点选确认。适合真实整理场景，比逐个填表更自然。</span>
+        </div>
+        <div class="moment">
+          <b>先保存后补全</b>
+          <span>拍照后立即生成“草稿物品”，名称可以晚点补。系统不因为缺少品牌、价格、票据而阻止保存，避免用户在整理现场被表单打断。</span>
+        </div>
+        <div class="moment">
+          <b>位置一键复用</b>
+          <span>连续录入时默认沿用上一个位置，例如“储物间 / 白色柜 / 第三层”。用户整理一个区域时不用重复选择位置。</span>
+        </div>
+        <div class="moment">
+          <b>找东西答案卡</b>
+          <span>搜索“充电线”时，首屏直接显示“在书房 / 右侧抽屉 / 黑色收纳盒”，附照片、数量、最后确认时间和“导航到位置”按钮。</span>
+        </div>
+        <div class="moment">
+          <b>扫码即开箱</b>
+          <span>箱子二维码扫开后不是进入复杂详情页，而是直接看到箱内清单、顶部照片、常用操作：添加、移出、打印、分享。</span>
+        </div>
+        <div class="moment">
+          <b>整理有收尾</b>
+          <span>整理模式结束时自动生成“今天整理了 18 件，清出 4 件待处理，发现 2 件重复购买”的结果页，让用户获得明确反馈。</span>
+        </div>
+
+        <h3>12.3 把录入从“填表”改成“连续动作”</h3>
+        <table>
+          <thead><tr><th>传统体验</th><th>优化后的爽感体验</th><th>产品要求</th></tr></thead>
+          <tbody>
+            <tr><td>点添加，进入长表单。</td><td>打开相机，先拍下物品。</td><td>添加入口默认进入拍照，表单是后置补充。</td></tr>
+            <tr><td>每件物品都手动选位置。</td><td>系统记住当前整理区域。</td><td>连续添加时固定位置，并提供“换到新位置”。</td></tr>
+            <tr><td>不填完整不能保存。</td><td>缺信息也能保存草稿。</td><td>只强制照片或名称、位置二选一。</td></tr>
+            <tr><td>整理完没有反馈。</td><td>结束时看到成果和下一步。</td><td>整理模式提供数量、价值、待处理清单和提醒。</td></tr>
+          </tbody>
+        </table>
+
+        <h3>12.4 高频场景要做到像快捷指令</h3>
+        <ul>
+          <li><strong>“这个东西在哪？”</strong>首页搜索、Siri / Spotlight、桌面小组件都能查，结果直接给位置，不先给列表。</li>
+          <li><strong>“我刚把它挪走了。”</strong>物品卡片长按选择“移动到”，最近位置排在最前。</li>
+          <li><strong>“借给别人了。”</strong>选择联系人和归还日期，自动生成提醒。</li>
+          <li><strong>“这个快过期了吗？”</strong>食品、药品、耗材支持保质期提醒，列表按紧急程度排序。</li>
+          <li><strong>“我要搬家了。”</strong>切换搬家模式后，每个箱子有编号、目标房间、箱内清单和是否已到达。</li>
+        </ul>
+
+        <h3>12.5 家庭协作要低摩擦</h3>
+        <p>家庭成员不一定愿意维护系统，所以协作设计要允许轻参与。比如家人只需要扫码查看箱子、用语音问“备用钥匙在哪”、或把新拍的照片发进家庭空间，由主要维护者稍后归档。</p>
+        <div class="note">关键判断标准：一个不爱整理的人，也愿意用它找东西；一个爱整理的人，用它会觉得更省力，而不是多了一份工作。</div>
+      </section>
+
+      <section id="baidu-vision">
+        <h2>13. 多物品识别技术方案</h2>
+        <p>中国大陆版本建议以百度智能云为主链路，不自研模型。方案不是依赖单一“大模型猜答案”，而是组合 <strong>图像多主体检测、通用物体识别、OCR、千帆多模态理解、业务规则层</strong>，让识别结果既有框选能力，也有中文家庭物品语义。</p>
+
+        <h3>13.1 推荐能力组合</h3>
+        <table>
+          <thead><tr><th>任务</th><th>百度能力</th><th>用途</th></tr></thead>
+          <tbody>
+            <tr><td>找多个物体</td><td>图像识别 multi_object_detect</td><td>从一张抽屉、柜子、箱子照片中返回多个物体位置框。</td></tr>
+            <tr><td>判断整图场景</td><td>图像识别 advanced_general</td><td>判断图片是厨房台面、药箱、工具箱、书桌、储物箱等，为分类提供上下文。</td></tr>
+            <tr><td>主物体兜底</td><td>图像识别 object_detect</td><td>当多主体检测结果过少或失败时，返回主物体候选。</td></tr>
+            <tr><td>识别包装文字</td><td>百度 OCR 通用文字识别 / 高精度版</td><td>识别品牌、型号、规格、保质期、药品名、票据文字。</td></tr>
+            <tr><td>理解归类</td><td>百度千帆多模态模型</td><td>把检测框、OCR 文本、用户位置上下文融合成可读的物品名称和分类。</td></tr>
+            <tr><td>体验稳定</td><td>自有规则层</td><td>做去重、合并、置信度分档、个人词库、低置信度过滤。</td></tr>
+          </tbody>
+        </table>
+        <p class="small">供应商能力参考：百度智能云图像识别、百度 OCR、百度千帆多模态。正式开发前需要根据开通区域、计费、QPS、图片大小限制做一次真实接口联调。</p>
+
+        <h3>13.2 端到端识别链路</h3>
+        <div class="flow">
+          <div>用户在整理模式里拍一张照片，例如“书房 / 右侧抽屉”。App 立即显示原图缩略图，避免用户等待空白结果。</div>
+          <div>App 压缩图片，上传原图到对象存储，例如百度 BOS，并把 location_hint、mode、user_hint 一起提交给后端。</div>
+          <div>后端创建异步识别任务，调用百度图像多主体检测，获得多个候选框。</div>
+          <div>后端对每个候选框裁剪小图，再调用 OCR 提取包装文字、品牌、型号、规格和日期。</div>
+          <div>后端把原图、候选框、OCR 文本、整图场景、用户位置提示发给千帆多模态模型做结构化理解。</div>
+          <div>规则层合并重复物品、过滤低置信度结果、统一分类，并返回候选物品卡片。</div>
+          <div>用户在 App 里一键确认、删除、改名、合并数量，确认后的结果写入正式物品库。</div>
+        </div>
+
+        <h3>13.3 后端接口设计</h3>
+        <p>建议后端只暴露一个聚合接口，前端不直接调用百度 API，方便后续切换供应商、做缓存和风控。</p>
+        <pre><code>POST /api/recognition/multi-item-photo
+
+Request:
+{
+  "image_url": "https://example.bcebos.com/photo.jpg",
+  "location_hint": "书房 / 右侧抽屉",
+  "mode": "drawer",
+  "user_hint": "这是我刚整理的抽屉"
+}
+
+Response:
+{
+  "job_id": "rec_20260519_001",
+  "image_width": 3024,
+  "image_height": 4032,
+  "items": [
+    {
+      "temp_id": "item_1",
+      "bbox": { "left": 320, "top": 460, "width": 520, "height": 380 },
+      "name": "7号电池",
+      "category": "家用耗材",
+      "brand": "南孚",
+      "quantity": 4,
+      "confidence": 0.86,
+      "evidence": ["multi_object_detect", "ocr", "qianfan_vl"],
+      "ocr_text": "南孚 AAA",
+      "needs_confirmation": true
+    }
+  ]
+}</code></pre>
+
+        <h3>13.4 千帆多模态提示词</h3>
+        <p>千帆这一步要做“结构化判断”，不要让模型自由发挥。提示词要明确分类范围、输出格式和不确定时的保守策略。</p>
+        <pre><code>你是家庭物品管理系统的识别助手。
+请根据图片、物体框位置、OCR文字、用户所在位置，识别每个候选物品。
+
+要求：
+1. 只输出 JSON。
+2. name 使用中国家庭用户容易理解的名称。
+3. category 从以下分类中选择：数码配件、厨房用品、清洁用品、药品保健、工具五金、衣物鞋包、食品饮料、文件证件、玩具文具、家居家电、其他。
+4. 如果不确定，name 使用更保守的名称，不要编造品牌。
+5. 如果 OCR 和视觉冲突，优先相信 OCR 中明确出现的品牌、型号、品名。
+6. confidence 使用 0 到 1。
+7. 每个物品都必须返回 needs_confirmation=true。</code></pre>
+
+        <h3>13.5 置信度与前端策略</h3>
+        <table>
+          <thead><tr><th>置信度</th><th>前端表现</th><th>入库策略</th></tr></thead>
+          <tbody>
+            <tr><td>&gt;= 0.85</td><td>默认勾选，正常显示名称和分类。</td><td>用户点“全部加入”即可保存。</td></tr>
+            <tr><td>0.60 - 0.85</td><td>显示“建议确认”，允许批量保存。</td><td>保存前用户最好看一眼名称。</td></tr>
+            <tr><td>&lt; 0.60</td><td>显示“疑似物品”，不默认勾选。</td><td>用户改名或手动确认后再保存。</td></tr>
+          </tbody>
+        </table>
+
+        <h3>13.6 第一版优先识别类目</h3>
+        <p>第一版不要追求识别所有东西，应优先打磨 OCR 价值高、家庭高频、用户愿意记录的品类。</p>
+        <div class="grid three">
+          <div class="card"><strong>数码配件</strong>充电器、数据线、耳机、电池、遥控器、插线板。</div>
+          <div class="card"><strong>厨房耗材</strong>保鲜袋、调料、杯子、锅具、厨房小工具。</div>
+          <div class="card"><strong>清洁用品</strong>洗衣液、纸巾、湿巾、清洁剂、垃圾袋。</div>
+          <div class="card"><strong>药品保健</strong>药盒、创可贴、体温计、口罩、保健品。</div>
+          <div class="card"><strong>工具五金</strong>螺丝刀、卷尺、胶带、扳手、电钻配件。</div>
+          <div class="card"><strong>文件证件</strong>文件袋、说明书、发票、保修卡、合同。</div>
+        </div>
+
+        <h3>13.7 兜底与学习机制</h3>
+        <ul>
+          <li><strong>手动画框：</strong>识别不到时，用户可以框出物品并让 AI 起名。</li>
+          <li><strong>快速改名：</strong>点击候选名称即可修改，修改后的名称进入个人词库。</li>
+          <li><strong>同类合并：</strong>多个电池、数据线、药盒可合并成“电池 x4”。</li>
+          <li><strong>低置信度过滤：</strong>框太多时，只默认选择可信结果，避免打扰用户。</li>
+          <li><strong>家庭词库：</strong>用户确认过的常用叫法优先使用，例如“苹果数据线”“备用钥匙包”。</li>
+        </ul>
+
+        <h3>13.8 识别速度与渐进式体验方案</h3>
+        <p>多物品视觉识别的体验瓶颈通常不是服务器性能，而是视觉大模型接口本身的响应时间。第一版不应让用户盯着加载状态干等完整结果，而应采用“先反馈、再补全、可中断”的渐进式识别体验。</p>
+        <table>
+          <thead><tr><th>层级</th><th>目标耗时</th><th>用户看到什么</th><th>技术动作</th></tr></thead>
+          <tbody>
+            <tr><td>本地预处理</td><td>0-0.5 秒</td><td>照片立即出现在整理页，按钮进入“识别中”。</td><td>App 端压缩到约 960px，降低 JPEG 体积，减少上传时间。</td></tr>
+            <tr><td>快速反馈</td><td>1-2 秒</td><td>显示“正在识别多个候选物品”，必要时显示粗略候选区域。</td><td>快速检测 / OCR 接口设置短超时，失败不阻塞主结果。</td></tr>
+            <tr><td>主识别结果</td><td>3-6 秒</td><td>返回可编辑候选卡片：名称、分类、数量、置信度。</td><td>主模型负责具体物品名，规则层做去重、改名和分类归一。</td></tr>
+            <tr><td>后台补全</td><td>6 秒以后</td><td>品牌、规格、保质期、票据等字段逐步补全。</td><td>OCR、条码数据库、历史词库和票据识别异步补充，不阻塞入库。</td></tr>
+          </tbody>
+        </table>
+        <p class="note">当前线上过渡方案保留：以“看图识万物”做具体命名，多主体检测和 OCR 只做辅助，并给辅助接口设置短超时。长期目标是切换到更稳定、更快的千帆视觉大模型或其他可控视觉模型，同时支持流式 / 渐进式返回。</p>
+
+        <h3 id="barcode-plan">13.9 条形码识别与商品数据库方案</h3>
+        <p>有包装条形码的商品，应优先使用扫码识别，而不是让视觉模型猜。条形码能直接对应 GTIN / EAN / UPC 商品编码，适合食品饮料、日用品、药品、清洁用品、个护产品、书籍、耗材等品类。它的优势是名称、品牌、规格、厂家、图片和参考价更清晰，用户确认成本更低。</p>
+
+        <h4>13.9.1 产品策略</h4>
+        <div class="grid">
+          <div class="card"><strong>单件扫码</strong>用户扫包装条码，系统自动填充商品名称、品牌、规格、分类和图片。</div>
+          <div class="card"><strong>整理模式混合识别</strong>拍照识别多个物品后，用户可以点某个候选卡片补扫条码，提高该物品准确率。</div>
+          <div class="card"><strong>囤货管理</strong>条码相同的商品自动合并数量，适合纸巾、洗衣液、调料、饮料、药品。</div>
+          <div class="card"><strong>保质期补充</strong>条码识别商品，OCR 或用户输入补充生产日期 / 到期日期。</div>
+        </div>
+
+        <h4>13.9.2 技术链路</h4>
+        <div class="flow">
+          <div>App 使用 iOS 原生 Vision / AVFoundation 扫描 EAN-13、EAN-8、UPC-A、UPC-E、Code 128、QR Code 等码制。</div>
+          <div>App 把条码值提交给后端：<code>GET /api/barcode/lookup?code=690xxxxxxxxxx</code>。</div>
+          <div>后端先查自有缓存库，如果命中，100-300ms 内返回。</div>
+          <div>缓存未命中时，后端调用第三方商品条码数据库接口，例如聚合数据、天聚数行、探数数据、ThinkAPI、3023 数据等。</div>
+          <div>后端把不同供应商字段归一为统一商品模型，并写入缓存。</div>
+          <div>App 展示“商品识别卡”，用户确认位置和数量后入库。</div>
+        </div>
+
+        <h4>13.9.3 推荐返回模型</h4>
+        <pre><code>GET /api/barcode/lookup?code=6901234567890
+
+Response:
+{
+  "code": "6901234567890",
+  "name": "某品牌洗手液 500ml",
+  "brand": "某品牌",
+  "category": "清洁用品",
+  "spec": "500ml",
+  "manufacturer": "某某日化有限公司",
+  "image_url": "https://...",
+  "reference_price": 19.9,
+  "source": "barcode_provider_a",
+  "confidence": 0.96,
+  "cache_hit": true,
+  "needs_confirmation": true
+}</code></pre>
+
+        <h4>13.9.4 供应商选择</h4>
+        <table>
+          <thead><tr><th>供应商类型</th><th>代表</th><th>优点</th><th>注意点</th></tr></thead>
+          <tbody>
+            <tr><td>聚合类 API</td><td>聚合数据、天聚数行、ThinkAPI、3023 数据、探数数据</td><td>接入快，适合 MVP；通常返回名称、品牌、规格、价格、图片等字段。</td><td>覆盖率和字段质量要实测；需要处理价格过期、图片缺失和同码多商品问题。</td></tr>
+            <tr><td>行业 / 垂直库</td><td>药品条码、食品库、图书 ISBN 数据</td><td>在药品、图书等垂直品类更准确。</td><td>可能需要单独采购，字段规范不同。</td></tr>
+            <tr><td>自建缓存库</td><td>用户确认后的条码商品库</td><td>越用越准，速度快，成本低。</td><td>要做去重、版本更新、用户纠错和来源记录。</td></tr>
+          </tbody>
+        </table>
+
+        <h4>13.9.5 与多物品视觉识别的关系</h4>
+        <table>
+          <thead><tr><th>场景</th><th>首选能力</th><th>原因</th></tr></thead>
+          <tbody>
+            <tr><td>包装上有清晰条码</td><td>条码识别</td><td>商品名称、品牌、规格最准确，速度最快。</td></tr>
+            <tr><td>一张图里有多个无包装物品</td><td>视觉多物品识别</td><td>条码不可用，需要模型理解物体。</td></tr>
+            <tr><td>条码能扫到但数据库无结果</td><td>视觉识别 + 用户确认</td><td>先保存条码和照片，用户改名后写入自有缓存。</td></tr>
+            <tr><td>药品、食品、保质期</td><td>条码 + OCR</td><td>条码确定商品，OCR 补生产日期、批号、有效期。</td></tr>
+          </tbody>
+        </table>
+
+        <div class="note">技术结论：条形码是“确定商品身份”的高置信度入口，视觉识别是“识别无条码/多物体场景”的通用入口。家庭物品管理系统应该把两者合并在同一个整理流程里：能扫条码就扫条码，扫不到再用视觉模型，用户确认后的结果沉淀到自有商品库。</div>
+
+        <h3>13.10 POC 验证计划</h3>
+        <table>
+          <thead><tr><th>阶段</th><th>目标</th><th>验收标准</th></tr></thead>
+          <tbody>
+            <tr><td>样本收集</td><td>收集 300-500 张真实家庭照片，覆盖抽屉、柜子、箱子、厨房、药箱、工具箱。</td><td>每类场景不少于 40 张，图片来自真实手机拍摄。</td></tr>
+            <tr><td>接口跑通</td><td>用百度图像识别、OCR、千帆多模态跑完整链路。</td><td>单张图片端到端返回时间控制在 5-8 秒以内。</td></tr>
+            <tr><td>条码验证</td><td>采购 1-2 家商品条码 API，用 200 个真实家庭商品条码测试覆盖率。</td><td>常见日用品、食品饮料、个护清洁命中率达到 80% 以上，平均返回时间小于 1 秒。</td></tr>
+            <tr><td>效果评估</td><td>统计框选召回率、命名准确率、OCR 对准确率的提升。</td><td>高频品类命名可用率达到 70% 以上，人工确认后入库成功率达到 90% 以上。</td></tr>
+            <tr><td>体验测试</td><td>让 5-10 个真实用户整理一个抽屉或箱子。</td><td>15 分钟内完成一组整理任务，用户愿意继续使用整理模式。</td></tr>
+          </tbody>
+        </table>
+
+        <div class="note">技术结论：百度智能云负责识别能力，产品自己的确认界面和规则层负责体验稳定。第一版目标不是自动识别 100%，而是让用户少填 80% 的信息。</div>
+      </section>
+
+      <section id="ux">
+        <h2>14. 交互设计</h2>
+        <h3>首页布局</h3>
+        <ul>
+          <li>顶部固定搜索框：输入任何东西都先搜索。</li>
+          <li>主操作按钮：添加物品、扫一扫、添加箱子。</li>
+          <li>今日提醒：保修到期、食物过期、借出未还。</li>
+          <li>常用位置：最近查看的房间、柜子、箱子。</li>
+        </ul>
+        <h3>物品详情页</h3>
+        <p>首屏必须看到照片、名称、位置路径、数量、状态和关键操作。票据、保修、历史记录等放在下方标签页，避免首屏过载。</p>
+        <h3>空状态设计</h3>
+        <p>新用户不应该看到空表格。首次进入应提供三个入口：从一个房间开始、从一个箱子开始、先记录贵重物品。这样更符合家庭整理的真实起点。</p>
+        <h3>整理模式</h3>
+        <p>整理模式是让产品变爽的关键入口。用户选择一个位置后进入连续拍照和快速确认界面，底部只保留拍照、确认、换位置、结束四个动作。结束后展示整理成果、待补全信息和可一键设置的提醒。</p>
+      </section>
+
+      <section id="ios-web">
+        <h2>15. iOS / 网站形态</h2>
+        <table>
+          <thead><tr><th>形态</th><th>优势</th><th>建议职责</th></tr></thead>
+          <tbody>
+            <tr><td>iOS App</td><td>拍照、扫码、离线、推送、相册、Face ID、快捷方式体验更好。</td><td>日常录入、查找、扫码、提醒。</td></tr>
+            <tr><td>响应式 Web</td><td>无需安装，适合电脑大屏批量编辑和导出。</td><td>批量整理、报表、打印二维码、导入导出。</td></tr>
+            <tr><td>PWA</td><td>开发成本低于双端原生，支持离线缓存和桌面图标。</td><td>早期验证可用，但扫码和系统能力不如原生稳定。</td></tr>
+          </tbody>
+        </table>
+        <p class="note">推荐路线：先做 iOS App + 简单 Web 管理页。若预算有限，先做 PWA 验证核心流程，再把拍照扫码体验迁移到原生 iOS。</p>
+      </section>
+
+      <section id="privacy">
+        <h2>16. 隐私与安全</h2>
+        <ul>
+          <li>默认私有，不做公开分享。</li>
+          <li>本地加密缓存，云端附件加密存储。</li>
+          <li>支持 Face ID / Touch ID 解锁。</li>
+          <li>家庭邀请需要明确确认，可随时移除成员。</li>
+          <li>导出文件带敏感信息提醒，例如贵重物品、住址、序列号。</li>
+          <li>支持完整数据导出和账号注销。</li>
+        </ul>
+      </section>
+
+      <section id="mvp">
+        <h2>17. MVP 规划</h2>
+        <h3>第一阶段：4-6 周</h3>
+        <ul>
+          <li>账号与家庭空间。</li>
+          <li>位置树、物品增删改查、照片上传。</li>
+          <li>搜索、分类、标签。</li>
+          <li>容器和二维码。</li>
+          <li>CSV 导出。</li>
+        </ul>
+        <h3>第二阶段：6-10 周</h3>
+        <ul>
+          <li>票据 OCR、保修提醒。</li>
+          <li>家庭成员协作。</li>
+          <li>PDF 保险清单。</li>
+          <li>离线缓存和同步冲突处理。</li>
+        </ul>
+        <h3>第三阶段：10-16 周</h3>
+        <ul>
+          <li>百度智能云多物品识别与自然语言录入。</li>
+          <li>断舍离建议。</li>
+          <li>搬家模式。</li>
+          <li>Web 批量管理和二维码打印。</li>
+        </ul>
+      </section>
+
+      <section id="metrics">
+        <h2>18. 指标与验收</h2>
+        <table>
+          <thead><tr><th>目标</th><th>指标</th><th>验收标准</th></tr></thead>
+          <tbody>
+            <tr><td>快速录入</td><td>单件物品建档耗时</td><td>新用户在 30 秒内完成最小记录。</td></tr>
+            <tr><td>查找有效</td><td>搜索到位置的成功率</td><td>搜索结果首屏显示位置路径，80% 测试任务无需二次询问。</td></tr>
+            <tr><td>持续使用</td><td>7 日留存、月活家庭数</td><td>完成 20 件以上录入的家庭 7 日留存明显高于未完成者。</td></tr>
+            <tr><td>导出可信</td><td>导出完整度</td><td>PDF / CSV 包含照片、价值、位置、票据字段。</td></tr>
+            <tr><td>协作稳定</td><td>同步冲突率</td><td>多人编辑时不丢数据，有活动记录可追溯。</td></tr>
+            <tr><td>AI 识别可用</td><td>多物品识别确认率</td><td>真实整理场景中，用户确认后可入库的候选物品占比达到 90% 以上。</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="risks">
+        <h2>19. 风险与取舍</h2>
+        <ul>
+          <li><strong>录入负担过高：</strong>用最小字段、连续拍照、AI 建议和批量操作降低门槛。</li>
+          <li><strong>用户坚持不下来：</strong>用房间 / 箱子任务化引导，而不是要求一次性录完整个家。</li>
+          <li><strong>AI 识别不准：</strong>所有 AI 结果都作为建议，用户确认后才入库。</li>
+          <li><strong>供应商依赖：</strong>识别服务通过后端聚合接口封装，避免前端绑定单一 API，后续可替换或增加其他国内供应商。</li>
+          <li><strong>隐私顾虑：</strong>提供本地优先、加密、导出、删除账号等明确能力。</li>
+          <li><strong>功能膨胀：</strong>第一版不做企业库存，不做复杂财务，不做二手交易闭环。</li>
+        </ul>
+      </section>
+
+      <section id="roadmap">
+        <h2>20. 路线图</h2>
+        <div class="grid three">
+          <div class="card"><span class="tag">V1</span><strong>能记录、能找到</strong>物品、位置、照片、搜索、容器、二维码、导出。</div>
+          <div class="card"><span class="tag alt">V2</span><strong>能维护、能协作</strong>票据、保修、提醒、家庭成员、离线同步、PDF 清单。</div>
+          <div class="card"><span class="tag">V3</span><strong>能整理、能决策</strong>AI 录入、搬家模式、重复购买提醒、断舍离建议、收藏估值。</div>
+        </div>
+        <h3>最终愿景</h3>
+        <p>用户不需要记住每件东西在哪里，只需要相信系统能告诉他。这个产品的成功不是让用户录入最多数据，而是让用户在“找不到东西、要维修、要搬家、要理赔、要清理”这些关键时刻真正省时间。</p>
+      </section>
+    </main>
+  </div>
+  <script src="/static/focus-reminder-global.js"></script>
+</body>
+</html>

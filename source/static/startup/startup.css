@@ -1,0 +1,269 @@
+:root {
+  --bg: #f5f7f8;
+  --paper: #ffffff;
+  --ink: #17212b;
+  --muted: #667384;
+  --line: #dce5ea;
+  --accent: #0f766e;
+  --accent-2: #2563eb;
+  --soft: #eef8f6;
+  --soft-2: #edf4ff;
+  --shadow: 0 16px 38px rgba(23, 33, 43, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "PingFang SC", "Microsoft YaHei", sans-serif;
+  line-height: 1.7;
+}
+
+a {
+  color: inherit;
+}
+
+.shell {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 34px 0 64px;
+}
+
+.top-link {
+  display: inline-flex;
+  margin-bottom: 18px;
+  color: var(--accent);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.hero,
+.panel,
+.project-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+
+.hero {
+  padding: 34px;
+  background: linear-gradient(135deg, #ffffff 0%, #eef8f6 58%, #edf4ff 100%);
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--accent);
+  font-size: 0.86rem;
+  font-weight: 900;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  line-height: 1.25;
+}
+
+h1 {
+  max-width: 880px;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  letter-spacing: 0;
+}
+
+.subtitle {
+  max-width: 860px;
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.actions a,
+.button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--accent);
+  border-radius: 7px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.actions a.secondary,
+.button.secondary {
+  background: #fff;
+  color: var(--accent);
+}
+
+.section {
+  margin-top: 24px;
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: end;
+  margin-bottom: 12px;
+}
+
+.section-head p {
+  margin: 6px 0 0;
+  color: var(--muted);
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.project-card {
+  display: grid;
+  gap: 12px;
+  padding: 20px;
+  text-decoration: none;
+}
+
+.project-card:hover {
+  border-color: rgba(15, 118, 110, 0.42);
+}
+
+.project-card span,
+.tag {
+  display: inline-flex;
+  width: fit-content;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--soft);
+  color: var(--accent);
+  font-size: 0.76rem;
+  font-weight: 900;
+}
+
+.project-card p,
+.panel p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.panel {
+  padding: 24px;
+  margin-top: 16px;
+}
+
+.doc-layout {
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.toc {
+  position: sticky;
+  top: 16px;
+  display: grid;
+  gap: 6px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+}
+
+.toc a {
+  padding: 7px 8px;
+  border-radius: 6px;
+  color: #334155;
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.toc a:hover {
+  background: var(--soft);
+  color: var(--accent);
+}
+
+.doc-main {
+  display: grid;
+  gap: 14px;
+}
+
+.doc-main .panel {
+  margin-top: 0;
+}
+
+.meta-grid,
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.mini-card {
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfd;
+}
+
+.mini-card strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+ul,
+ol {
+  margin: 10px 0 0;
+  padding-left: 22px;
+}
+
+li {
+  margin: 6px 0;
+}
+
+code {
+  padding: 2px 5px;
+  border-radius: 4px;
+  background: #edf2f5;
+}
+
+@media (max-width: 880px) {
+  .shell {
+    width: min(100% - 20px, 1180px);
+    padding-top: 22px;
+  }
+
+  .hero,
+  .panel,
+  .project-card {
+    padding: 18px;
+  }
+
+  .project-grid,
+  .doc-layout,
+  .meta-grid,
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .toc {
+    position: static;
+  }
+}

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>省份真实地图网页游戏设计文档</title>
+    <link rel="stylesheet" href="doc-style.css" />
+  </head>
+  <body>
+    <main class="doc-shell">
+      <nav class="doc-nav" aria-label="文档导航">
+        <a href="../index.html">打开游戏</a>
+        <a href="index.html">文档首页</a>
+        <a href="design.html">基础设计</a>
+        <a href="fun-growth-iteration.html">趣味增长迭代</a>
+      </nav>
+      <div class="doc-layout">
+        <aside class="doc-sidebar" aria-label="本文目录">
+          <p>本文目录</p>
+          <ol>
+          <li><a href="#section-1">目标</a></li>
+          <li><a href="#section-2">玩法范围</a></li>
+          <li><a href="#section-3">页面结构</a></li>
+          <li><a href="#section-4">技术方案</a></li>
+          <li><a href="#section-5">地图数据</a></li>
+          <li><a href="#section-6">数据字段</a></li>
+          <li><a href="#section-7">验收标准</a></li>
+          </ol>
+        </aside>
+        <article class="doc-card">
+        <h1>省份真实地图网页游戏设计文档</h1>
+        <h2 id="section-1">目标</h2>
+        <p>创建一个可离线运行的网页小游戏。玩家点击中国地图上的真实省级行政区边界，页面立即显示对应名称，并记录已发现进度。</p>
+        <h2 id="section-2">玩法范围</h2>
+        <ul>
+        <li>地图使用本地 GeoJSON 数据绘制真实省级行政区轮廓，而不是块状示意图。</li>
+        <li>覆盖 34 个省级行政区：省、自治区、直辖市、特别行政区和台湾地区。</li>
+        <li>点击任意区块后：</li>
+        <li>右侧信息区显示完整名称、行政类型、区域和省会/首府等信息。</li>
+        <li>地图区域显示简称标签，并保持已发现状态。</li>
+        <li>首次点击计入发现进度。</li>
+        <li>提供随机挑战：页面给出目标行政区，玩家点击对应区块后给出结果反馈。</li>
+        <li>提供重置按钮，清空已发现进度和当前挑战。</li>
+        </ul>
+        <h2 id="section-3">页面结构</h2>
+        <ul>
+        <li>顶部状态栏：游戏标题、已发现数量、完成度。</li>
+        <li>主区域：</li>
+        <li>左侧为可点击 SVG 真实边界地图。</li>
+        <li>右侧为当前省份信息、挑战目标、操作按钮和最近点击记录。</li>
+        <li>移动端布局改为上下排列，地图保持固定比例缩放。</li>
+        </ul>
+        <h2 id="section-4">技术方案</h2>
+        <ul>
+        <li>使用原生 HTML、CSS、JavaScript，不引入构建工具。</li>
+        <li>使用 Leaflet 渲染本地 GeoJSON 省级边界，提供拖拽、缩放和移动端触控交互。</li>
+        <li>Leaflet 资源已放在 <code>vendor/leaflet</code>，页面不依赖 CDN。</li>
+        <li>GeoJSON 以 <code>data/china-provinces.js</code> 形式内嵌到页面，保证直接打开 <code>index.html</code> 也能运行。</li>
+        <li>使用 <code>localStorage</code> 保存已发现记录，刷新后保留游戏进度。</li>
+        <li>无网络依赖，直接打开 <code>index.html</code> 即可运行。</li>
+        </ul>
+        <h2 id="section-5">地图数据</h2>
+        <ul>
+        <li>原始边界数据保存为 <code>data/china-provinces.geojson</code>。</li>
+        <li>页面运行数据保存为 <code>data/china-provinces.js</code>。</li>
+        <li>数据来源：DataV.GeoAtlas 中国地图 GeoJSON，全国省级边界 <code>100000_full.json</code>。</li>
+        </ul>
+        <h2 id="section-6">数据字段</h2>
+        <p>每个省级行政区包含：</p>
+        <ul>
+        <li><code>id</code>：稳定标识</li>
+        <li><code>name</code>：地图内显示名称</li>
+        <li><code>fullName</code>：完整名称</li>
+        <li><code>type</code>：行政类型</li>
+        <li><code>capital</code>：省会、首府或行政中心</li>
+        <li><code>zone</code>：地理区域</li>
+        <li><code>adcode</code>：用于匹配 GeoJSON feature</li>
+        <li><code>color</code>：地图填充色</li>
+        </ul>
+        <h2 id="section-7">验收标准</h2>
+        <ul>
+        <li>页面加载后能看到真实省级边界地图和 34 个可点击区域。</li>
+        <li>点击省级边界区域能显示对应省级行政区名称。</li>
+        <li>已点击区域有明显的已发现状态。</li>
+        <li>进度统计正确，重置后归零。</li>
+        <li>随机挑战能判断正确和错误点击。</li>
+        <li>桌面和手机宽度下文字不溢出，地图不会遮挡信息面板。</li>
+        </ul>
+      </article>
+      </div>
+    </main>
+    <script src="/static/focus-reminder-global.js"></script>
+</body>
+</html>

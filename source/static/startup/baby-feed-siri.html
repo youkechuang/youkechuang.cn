@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BabyFeedSiri 奶宝项目文档</title>
+    <link rel="stylesheet" href="startup.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <a class="top-link" href="index.html">返回创业专题</a>
+      <section class="hero">
+        <p class="eyebrow">iOS / Siri / Parenting</p>
+        <h1>BabyFeedSiri 奶宝：用 Siri 快速记录宝宝喂养和尿布</h1>
+        <p class="subtitle">
+          一个本地优先的 iOS 宝宝喂养与尿布记录 App 原型，目标是在最忙乱的照护场景里，让用户通过手动输入或 Siri 语音快速完成记录，并获得下一次喂奶提醒。
+        </p>
+      </section>
+
+      <div class="doc-layout section">
+        <nav class="toc" aria-label="目录">
+          <a href="#summary">产品摘要</a>
+          <a href="#features">核心功能</a>
+          <a href="#siri">Siri 入口</a>
+          <a href="#tech">技术实现</a>
+          <a href="#roadmap">后续路线</a>
+        </nav>
+        <div class="doc-main">
+          <section id="summary" class="panel">
+            <h2>产品摘要</h2>
+            <p>奶宝解决的是新手父母和家庭照护者的高频记录问题：喝奶多少、什么时候尿尿、什么时候便便、下一次大概什么时候喂奶。</p>
+            <div class="meta-grid">
+              <div class="mini-card"><strong>目标用户</strong>新生儿和婴幼儿家庭照护者。</div>
+              <div class="mini-card"><strong>核心价值</strong>少打字、快记录、能提醒。</div>
+              <div class="mini-card"><strong>数据策略</strong>本地优先，记录保存在设备文档目录。</div>
+            </div>
+          </section>
+
+          <section id="features" class="panel">
+            <h2>核心功能</h2>
+            <ul>
+              <li>手动记录喝奶、尿尿、便便。</li>
+              <li>根据最近一次喝奶预测下一次喂奶时间，默认按 3 小时间隔。</li>
+              <li>根据最近记录粗略提示可能尿尿、便便时间。</li>
+              <li>本地通知提醒下一次喂奶。</li>
+              <li>数据保存在设备本地 <code>Documents/baby-log.json</code>。</li>
+            </ul>
+          </section>
+
+          <section id="siri" class="panel">
+            <h2>Siri 和快捷指令</h2>
+            <p>App 名称显示为“奶宝”，适合通过 Siri 或 Shortcuts 快速调用。</p>
+            <ul>
+              <li>“用奶宝记录宝宝喝奶”</li>
+              <li>“用奶宝记录奶量”</li>
+              <li>“用奶宝喂奶”</li>
+              <li>“用奶宝记录宝宝尿尿”</li>
+              <li>“用奶宝记录宝宝便便”</li>
+              <li>“用奶宝查询宝宝状态”</li>
+              <li>“用奶宝看宝宝今天喝了多少奶”</li>
+            </ul>
+            <p>当前 Siri 入口拆成独立 Intent：记录喝奶、记录尿尿、记录便便、查询宝宝状态。这样更适合语音交互，也降低误操作。</p>
+          </section>
+
+          <section id="tech" class="panel">
+            <h2>技术实现</h2>
+            <div class="feature-grid">
+              <div class="mini-card"><strong>App 技术栈</strong>SwiftUI + App Intents + 本地 JSON 存储。</div>
+              <div class="mini-card"><strong>核心文件</strong><code>BabyIntents.swift</code>、<code>BabyLogStore.swift</code>、<code>PredictionEngine.swift</code>。</div>
+              <div class="mini-card"><strong>运行方式</strong>使用 XcodeGen 生成项目后，在 Xcode 中运行。</div>
+            </div>
+            <pre><code>xcodegen generate
+open BabyFeedSiri.xcodeproj</code></pre>
+          </section>
+
+          <section id="roadmap" class="panel">
+            <h2>后续路线</h2>
+            <ol>
+              <li>补充母乳左右侧、奶粉 / 母乳类型。</li>
+              <li>加入夜间模式、锁屏小组件和更低打扰提醒。</li>
+              <li>用宝宝自己的历史间隔动态计算喂奶、尿布和排便预测。</li>
+              <li>增加每日 / 每周图表：总奶量、平均间隔、最长夜间睡眠。</li>
+              <li>支持 iCloud 同步，方便家人共同记录。</li>
+            </ol>
+          </section>
+        </div>
+      </div>
+    </main>
+    <script src="/static/focus-reminder-global.js"></script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>15分钟计划记录</title>
+    <meta
+      name="description"
+      content="本地保存的15分钟番茄计划记录工具，每轮记录当前工作和进度。"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <a class="back-link" href="/">返回首页</a>
+          <h1>15分钟计划记录</h1>
+          <p>每 15 分钟记录一次：当前工作是什么，进度怎么样。数据只保存在当前浏览器。</p>
+        </div>
+        <div class="today-card">
+          <span id="todayLabel">今天</span>
+          <strong id="statusText">未开始</strong>
+          <small id="nextReminderText">等待开始</small>
+        </div>
+      </header>
+
+      <section class="dashboard">
+        <section class="timer-panel" aria-label="计时器">
+          <div class="timer-ring">
+            <svg viewBox="0 0 120 120" aria-hidden="true">
+              <circle class="track" cx="60" cy="60" r="52"></circle>
+              <circle id="progressCircle" class="progress" cx="60" cy="60" r="52"></circle>
+            </svg>
+            <div class="timer-time">
+              <strong id="timerText">15:00</strong>
+              <span id="roundText">第 0 轮</span>
+            </div>
+          </div>
+          <div class="timer-actions">
+            <button id="startButton" type="button">开始</button>
+            <button id="pauseButton" type="button" class="secondary">暂停</button>
+            <button id="finishButton" type="button" class="ghost">结束今天</button>
+          </div>
+          <div id="pendingBox" class="pending-box" hidden>
+            <h2>该记录了</h2>
+            <p>请填写当前工作和进度，再进入下一轮。</p>
+          </div>
+        </section>
+
+        <section class="record-panel">
+          <div class="section-head">
+            <div>
+              <h2>本轮记录</h2>
+              <p>每一轮都需要写清楚工作内容和进度。</p>
+            </div>
+          </div>
+          <form id="logForm" class="record-form">
+            <label class="field">
+              <span>当前工作</span>
+              <input id="workInput" type="text" maxlength="120" placeholder="例如：开发番茄钟简化界面" />
+            </label>
+            <label class="field">
+              <span>进度怎么样</span>
+              <textarea
+                id="progressInput"
+                rows="3"
+                maxlength="240"
+                placeholder="例如：完成页面重构，正在处理移动端样式"
+              ></textarea>
+            </label>
+            <div class="record-tools">
+              <select id="planSelect" aria-label="关联计划">
+                <option value="">不关联计划</option>
+              </select>
+              <button type="submit">保存并下一轮</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="plan-panel">
+          <div class="section-head">
+            <div>
+              <h2>今天计划</h2>
+              <p>只写今天最重要的几件事。</p>
+            </div>
+          </div>
+          <form id="planForm" class="input-row">
+            <input id="planInput" type="text" maxlength="80" placeholder="例如：完成番茄时钟开发" />
+            <button type="submit">添加</button>
+          </form>
+          <ul id="planList" class="plan-list" aria-live="polite"></ul>
+        </section>
+      </section>
+
+      <section class="timeline-section">
+        <div class="section-head">
+          <div>
+            <h2>今日记录</h2>
+            <p id="timelineHint">每条记录包含工作内容和进度。</p>
+          </div>
+          <div class="section-actions">
+            <button id="notifyButton" type="button" class="small-button">开启通知</button>
+            <button id="exportButton" type="button" class="small-button">导出 JSON</button>
+          </div>
+        </div>
+        <ol id="timelineList" class="timeline-list" aria-live="polite"></ol>
+      </section>
+
+      <section class="settings-section">
+        <div class="section-head">
+          <div>
+            <h2>本地数据与历史</h2>
+            <p>记录只存在当前浏览器。可以选择日期查看历史，也可以导入导出 JSON。</p>
+          </div>
+          <label class="date-picker">
+            <span>日期</span>
+            <input id="historyDate" type="date" />
+          </label>
+        </div>
+        <div id="historyView" class="history-view"></div>
+        <div class="settings-actions">
+          <button id="importButton" type="button" class="small-button">导入 JSON</button>
+          <button id="clearButton" type="button" class="danger-button">清空本地数据</button>
+          <input id="importFile" type="file" accept="application/json" hidden />
+        </div>
+      </section>
+    </main>
+
+    <div id="reminderModal" class="reminder-modal" hidden role="dialog" aria-modal="true" aria-labelledby="reminderTitle">
+      <div class="reminder-dialog">
+        <div>
+          <p class="reminder-kicker">15 分钟到了</p>
+          <h2 id="reminderTitle">现在记录一下</h2>
+          <p>请填写当前工作和进度。保存后自动进入下一轮。</p>
+        </div>
+        <form id="modalLogForm" class="record-form">
+          <label class="field">
+            <span>当前工作</span>
+            <input id="modalWorkInput" type="text" maxlength="120" placeholder="现在正在做什么？" />
+          </label>
+          <label class="field">
+            <span>进度怎么样</span>
+            <textarea id="modalProgressInput" rows="3" maxlength="240" placeholder="进展、卡点、下一步"></textarea>
+          </label>
+          <div class="record-tools">
+            <select id="modalPlanSelect" aria-label="关联计划">
+              <option value="">不关联计划</option>
+            </select>
+            <button type="submit">保存并下一轮</button>
+          </div>
+        </form>
+        <button id="modalLaterButton" type="button" class="modal-later-button">稍后记录，先关闭弹窗</button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

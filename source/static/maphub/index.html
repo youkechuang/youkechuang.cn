@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>地图学习游戏</title>
+    <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div class="title-group">
+          <p class="eyebrow">地图探索</p>
+          <h1 id="mapTitle">省份真实地图</h1>
+          <p id="mapSubtitle" class="map-subtitle">先学习，再挑战。用真实省级边界记住位置、省会和区域。</p>
+        </div>
+        <div class="stats" aria-label="游戏进度">
+          <div class="stat">
+            <span id="foundCount">0/34</span>
+            <small>已发现</small>
+          </div>
+          <div class="stat">
+            <span id="completionRate">0%</span>
+            <small>完成度</small>
+          </div>
+        </div>
+      </header>
+
+      <nav class="scope-tabs" aria-label="地图范围">
+        <button id="chinaScopeButton" type="button" class="active">中国省份</button>
+        <button id="worldScopeButton" type="button">世界国家</button>
+      </nav>
+
+      <nav class="mode-tabs" aria-label="学习模式">
+        <button id="studyModeButton" type="button" class="active">预习学习</button>
+        <button id="levelModeButton" type="button">闯关考试</button>
+      </nav>
+
+      <section class="game-layout">
+        <section id="mapPanel" class="map-panel" aria-label="地图学习区域">
+          <div class="map-tools" aria-label="地图工具">
+            <button id="fullscreenButton" type="button">全屏</button>
+            <button id="magnifierButton" type="button">放大镜</button>
+          </div>
+          <div id="map" class="map-wrap"></div>
+          <div id="mapMagnifier" class="map-magnifier" hidden>
+            <div id="magnifierMap" class="magnifier-map"></div>
+          </div>
+        </section>
+
+        <aside class="side-panel">
+          <section class="readout" aria-live="polite">
+            <p class="panel-label">当前</p>
+            <h2 id="provinceName">尚未选择</h2>
+            <dl class="details">
+              <div>
+                <dt>类型</dt>
+                <dd id="provinceType">-</dd>
+              </div>
+              <div>
+                <dt>区域</dt>
+                <dd id="provinceZone">-</dd>
+              </div>
+              <div>
+                <dt id="capitalLabel">行政中心</dt>
+                <dd id="provinceCapital">-</dd>
+              </div>
+            </dl>
+          </section>
+
+          <section class="challenge-box">
+            <p class="panel-label">闯关模式</p>
+            <div id="levelZoneButtons" class="zone-buttons" aria-label="选择测试范围"></div>
+            <div id="challengeTarget" class="target">未开始</div>
+            <div class="quick-actions" aria-label="快速练习">
+              <button id="dailyButton" type="button">每日挑战</button>
+              <button id="wrongButton" type="button">错题复习</button>
+            </div>
+            <div class="level-stats" aria-label="闯关成绩">
+              <div>
+                <span id="levelProgress">0/10</span>
+                <small>题目</small>
+              </div>
+              <div>
+                <span id="levelScore">0</span>
+                <small>得分</small>
+              </div>
+              <div>
+                <span id="levelStreak">0</span>
+                <small>连击</small>
+              </div>
+              <div>
+                <span id="levelTimer">00:00</span>
+                <small>用时</small>
+              </div>
+            </div>
+            <p id="challengeFeedback" class="feedback"> </p>
+          </section>
+
+          <section class="study-box">
+            <div class="study-head">
+              <div>
+                <p class="panel-label">预习学习</p>
+                <p class="study-tip">点击地图查看信息</p>
+              </div>
+              <label class="name-toggle">
+                <input id="studyLabelToggle" type="checkbox" />
+                <span>显示名称</span>
+              </label>
+            </div>
+            <div class="study-toolbar">
+              <select id="studyZoneSelect" class="study-zone-select" aria-label="选择学习区域"></select>
+              <button id="studyListToggle" type="button" class="study-list-toggle">列表</button>
+            </div>
+            <div class="study-current" aria-live="polite">
+              <h3 id="studyCurrentName">点击地图开始预习</h3>
+              <p id="studyCurrentMeta" class="study-current-meta">选择省份后显示区域、类型和行政中心。</p>
+              <p id="studyCurrentHint" class="study-current-hint">隐藏名称观察形状，打开名称用于对照。</p>
+            </div>
+            <div class="study-nav">
+              <button id="studyPrevButton" type="button">上一个</button>
+              <button id="studyNextButton" type="button">下一个</button>
+              <button id="studyStartZoneButton" type="button">测试</button>
+            </div>
+            <div id="studyListPanel" class="study-list-panel" hidden>
+              <div id="studyListTitle" class="study-list-title">省份列表</div>
+              <div id="studyList" class="study-list" aria-live="polite"></div>
+            </div>
+          </section>
+
+          <div class="controls">
+            <button id="challengeButton" type="button">开始闯关</button>
+            <button id="answerButton" type="button" class="secondary">查看答案</button>
+            <button id="resetButton" type="button" class="secondary">重置</button>
+          </div>
+
+          <section class="result-box">
+            <p class="panel-label">本局评价</p>
+            <div id="levelResult" class="level-result">完成一局后显示成绩</div>
+          </section>
+
+          <section class="recent-box">
+            <p class="panel-label">最近点击</p>
+            <ol id="recentList" class="recent-list" aria-live="polite"></ol>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <script src="vendor/leaflet/leaflet.js"></script>
+    <script src="data/china-provinces.js"></script>
+    <script src="data/world-countries.js"></script>
+    <script src="script.js"></script>
+    <script src="/static/focus-reminder-global.js"></script>
+</body>
+</html>

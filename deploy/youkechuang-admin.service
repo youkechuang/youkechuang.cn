@@ -1,0 +1,14 @@
+[Unit]
+Description=Youkechuang website admin
+After=network.target docker.service
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/youkechuang/repo
+EnvironmentFile=/opt/youkechuang/config/admin.env
+ExecStart=/root/.nvm/versions/node/v24.9.0/bin/node /opt/youkechuang/admin_server.js
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,117 @@
+name: Deploy to Aliyun Server
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+concurrency:
+  group: aliyun-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install GitSite
+        run: npm install gitsite-cli -g
+
+      - name: Build
+        run: gitsite-cli build -o dist
+
+      - name: Package
+        run: |
+          tar -C dist -czf site.tar.gz .
+          tar -czf deploy-assets.tar.gz deploy/nginx.conf deploy/analytics_report.py
+
+      - name: Configure SSH
+        env:
+          ALIYUN_HOST: ${{ secrets.ALIYUN_HOST }}
+          ALIYUN_SSH_KEY: ${{ secrets.ALIYUN_SSH_KEY }}
+        run: |
+          test -n "$ALIYUN_HOST"
+          test -n "$ALIYUN_SSH_KEY"
+          mkdir -p ~/.ssh
+          printf '%s\n' "$ALIYUN_SSH_KEY" > ~/.ssh/aliyun_key
+          chmod 600 ~/.ssh/aliyun_key
+          ssh-keyscan -H "$ALIYUN_HOST" >> ~/.ssh/known_hosts
+
+      - name: Upload
+        env:
+          ALIYUN_HOST: ${{ secrets.ALIYUN_HOST }}
+          ALIYUN_USER: ${{ secrets.ALIYUN_USER }}
+        run: |
+          scp -i ~/.ssh/aliyun_key site.tar.gz deploy-assets.tar.gz "$ALIYUN_USER@$ALIYUN_HOST:/tmp/"
+
+      - name: Release
+        env:
+          ALIYUN_HOST: ${{ secrets.ALIYUN_HOST }}
+          ALIYUN_USER: ${{ secrets.ALIYUN_USER }}
+          ANALYTICS_USER: ${{ secrets.ANALYTICS_USER }}
+          ANALYTICS_PASSWORD: ${{ secrets.ANALYTICS_PASSWORD }}
+        run: |
+          ssh -i ~/.ssh/aliyun_key "$ALIYUN_USER@$ALIYUN_HOST" \
+            "ANALYTICS_USER='$ANALYTICS_USER' ANALYTICS_PASSWORD='$ANALYTICS_PASSWORD' bash -s" <<'REMOTE'
+          set -euo pipefail
+
+          app_dir=/opt/youkechuang
+          release="$app_dir/releases/$(date +%Y%m%d%H%M%S)-${GITHUB_SHA:-manual}"
+
+          mkdir -p "$release" "$app_dir/logs" "$app_dir/analytics" "$app_dir/config"
+          tar -xzf /tmp/site.tar.gz -C "$release"
+          tar -xzf /tmp/deploy-assets.tar.gz -C /tmp
+
+          cp /tmp/deploy/nginx.conf "$app_dir/config/nginx.conf"
+          cp /tmp/deploy/analytics_report.py "$app_dir/analytics_report.py"
+          chmod +x "$app_dir/analytics_report.py"
+
+          if [ -z "${ANALYTICS_USER:-}" ] || [ -z "${ANALYTICS_PASSWORD:-}" ]; then
+            ANALYTICS_USER=admin
+            ANALYTICS_PASSWORD="$(openssl rand -base64 18)"
+            echo "ANALYTICS_PASSWORD was not configured. Generated a temporary password in $app_dir/config/analytics-password.txt"
+            printf '%s\n' "$ANALYTICS_PASSWORD" > "$app_dir/config/analytics-password.txt"
+            chmod 600 "$app_dir/config/analytics-password.txt"
+          fi
+
+          hash="$(openssl passwd -apr1 "$ANALYTICS_PASSWORD")"
+          printf '%s:%s\n' "$ANALYTICS_USER" "$hash" > "$app_dir/config/.analytics.htpasswd"
+          chmod 644 "$app_dir/config/.analytics.htpasswd"
+
+          ln -sfn "$release" "$app_dir/current"
+
+          docker rm -f youkechuang-web >/dev/null 2>&1 || true
+          ids="$(docker ps -q --filter publish=80 || true)"
+          if [ -n "$ids" ]; then
+            docker stop $ids
+          fi
+
+          docker run -d \
+            --name youkechuang-web \
+            --restart unless-stopped \
+            -p 80:80 \
+            -v "$app_dir/current:/usr/share/nginx/html:ro" \
+            -v "$app_dir/analytics:/usr/share/nginx/analytics:ro" \
+            -v "$app_dir/logs:/var/log/nginx" \
+            -v "$app_dir/config/nginx.conf:/etc/nginx/conf.d/default.conf:ro" \
+            -v "$app_dir/config/.analytics.htpasswd:/etc/nginx/.analytics.htpasswd:ro" \
+            nginx:latest
+
+          "$app_dir/analytics_report.py" "$app_dir/logs/youkechuang.access.log" "$app_dir/analytics"
+
+          cron_file=/etc/cron.d/youkechuang-analytics
+          printf '*/5 * * * * root %s/analytics_report.py %s/logs/youkechuang.access.log %s/analytics >/dev/null 2>&1\n' "$app_dir" "$app_dir" "$app_dir" > "$cron_file"
+          chmod 644 "$cron_file"
+
+          rm -rf /tmp/site.tar.gz /tmp/deploy-assets.tar.gz /tmp/deploy
+          docker ps --filter name=youkechuang-web --format "{{.Names}} {{.Status}} {{.Ports}}"
+          REMOTE
