@@ -36,25 +36,25 @@
             <p>记录最近的思考、学习、产品和生活更新。</p>
         </a>
         <a class="home-entry-card" href="/static/maphub/index.html">
-            <img src="/static/cover/flower.jpg" alt="地图学习入口" />
+            <img src="/static/cover/maphub-cover.svg" alt="地图学习入口" />
             <span>学习工具</span>
             <strong>省份真实地图游戏</strong>
             <p>通过预习、每日挑战、错题复习来记住中国省级行政区。</p>
         </a>
         <a class="home-entry-card" href="/static/focus/index.html">
-            <img src="/static/cover/default.jpg" alt="15分钟计划记录入口" />
+            <img src="/static/cover/focus-cover.svg" alt="15分钟计划记录入口" />
             <span>效率工具</span>
             <strong>15分钟计划记录</strong>
             <p>填写今日计划，每 15 分钟记录一次实际做了什么，数据只存在本地。</p>
         </a>
         <a class="home-entry-card" href="/static/startup/index.html">
-            <img src="/static/cover/default.jpg" alt="创业专题入口" />
+            <img src="/static/cover/startup-cover.svg" alt="创业专题入口" />
             <span>创业专题</span>
             <strong>项目文档中心</strong>
             <p>集中整理正在探索的产品、App、工具和原型项目文档。</p>
         </a>
         <a class="home-entry-card" href="/static/docs/product.html">
-            <img src="/static/cover/default.jpg" alt="产品文档入口" />
+            <img src="/static/cover/docs-cover.svg" alt="产品文档入口" />
             <span>文档</span>
             <strong>网站产品文档</strong>
             <p>查看本站定位、功能模块、部署流程和后续规划。</p>
