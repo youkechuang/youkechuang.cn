@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#b45309"/>
+      <stop offset="55%" stop-color="#ea580c"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.02"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <rect width="800" height="450" fill="url(#glow)"/>
+
+  <!-- concentric time rings -->
+  <g fill="none" stroke="#ffffff" stroke-opacity="0.16" stroke-width="2">
+    <circle cx="195" cy="210" r="115"/>
+    <circle cx="195" cy="210" r="88"/>
+  </g>
+
+  <!-- clock / pomodoro -->
+  <g transform="translate(195,210)">
+    <circle r="70" fill="#ffffff" fill-opacity="0.95"/>
+    <g stroke="#b45309" stroke-width="7" stroke-linecap="round">
+      <line x1="0" y1="0" x2="0" y2="-41"/>
+      <line x1="0" y1="0" x2="31" y2="-14"/>
+    </g>
+    <circle r="7" fill="#b45309"/>
+    <circle cx="46" cy="-46" r="6" fill="#ea580c"/>
+  </g>
+
+  <!-- minute dots -->
+  <g fill="#ffffff" fill-opacity="0.7">
+    <circle cx="360" cy="120" r="6"/>
+    <circle cx="385" cy="210" r="6"/>
+    <circle cx="360" cy="300" r="6"/>
+    <circle cx="430" cy="90" r="6"/>
+    <circle cx="452" cy="210" r="6"/>
+    <circle cx="430" cy="330" r="6"/>
+  </g>
+
+  <!-- text -->
+  <g font-family="'PingFang SC','Microsoft YaHei',sans-serif">
+    <text x="590" y="160" font-size="40" font-weight="800" fill="#ffffff">15分钟计划记录</text>
+    <text x="590" y="212" font-size="20" fill="#fef3c7">写下计划 · 每 15 分钟记录一次</text>
+    <text x="590" y="250" font-size="17" fill="#fde68a" fill-opacity="0.9">数据只保存在本地</text>
+  </g>
+</svg>
