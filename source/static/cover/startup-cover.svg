@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6d28d9"/>
+      <stop offset="55%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#4f46e5"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.02"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <rect width="800" height="450" fill="url(#glow)"/>
+
+  <!-- ascending steps -->
+  <g fill="#ffffff" fill-opacity="0.22">
+    <rect x="95" y="290" width="60" height="52" rx="7"/>
+    <rect x="172" y="240" width="60" height="102" rx="7"/>
+    <rect x="249" y="185" width="60" height="157" rx="7"/>
+  </g>
+
+  <!-- rocket -->
+  <g transform="translate(355,170)">
+    <path d="M 0 0 C -16 27 -19 63 -10 95 L 10 95 C 19 63 16 27 0 0 Z" fill="#ffffff" fill-opacity="0.95"/>
+    <circle cx="0" cy="38" r="16" fill="#7c3aed"/>
+    <path d="M -10 95 L -22 118 L -8 105 Z" fill="#fbbf24"/>
+    <path d="M 10 95 L 22 118 L 8 105 Z" fill="#fbbf24"/>
+    <path d="M -4 95 L 0 118 L 4 95 Z" fill="#f59e0b"/>
+    <g stroke="#fbbf24" stroke-width="5" stroke-linecap="round">
+      <line x1="-14" y1="52" x2="-36" y2="24"/>
+      <line x1="14" y1="52" x2="36" y2="24"/>
+    </g>
+  </g>
+
+  <!-- stars -->
+  <g fill="#ffffff" fill-opacity="0.8">
+    <circle cx="480" cy="100" r="5"/>
+    <circle cx="545" cy="60" r="4"/>
+    <circle cx="610" cy="120" r="5"/>
+    <circle cx="675" cy="70" r="4"/>
+    <circle cx="520" cy="180" r="4"/>
+  </g>
+
+  <!-- text -->
+  <g font-family="'PingFang SC','Microsoft YaHei',sans-serif">
+    <text x="590" y="175" font-size="40" font-weight="800" fill="#ffffff">项目文档中心</text>
+    <text x="590" y="227" font-size="20" fill="#ede9fe">产品 · App · 工具 · 原型</text>
+    <text x="590" y="265" font-size="17" fill="#c4b5fd" fill-opacity="0.9">正在探索中的创业项目</text>
+  </g>
+</svg>
