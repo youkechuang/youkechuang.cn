@@ -17,6 +17,8 @@ site:
       uri: /blogs/all/index.html
     - title: 地图
       uri: /static/maphub/index.html
+    - title: 人生足迹
+      uri: /static/life-journey/index.html
     - title: 15分钟记录
       uri: /static/focus/index.html
     - title: 创业专题
