@@ -1,8 +1,8 @@
 site:
-  domain: http://youkechuang.cn
+  domain: https://youkechuang.cn
   title: 尤科闯的官方网站
-  description: 尤科闯的官方网站 (youkechuang.cn) 研究互联网产品和技术，提供原创中文精品教程
-  keywords: 尤科闯, youkechuang, git, gitsite, javascript, node, jquery, python, java, spring, sql, database, linux, operating system, os, cpu, verilog, risc-v, bitcoin, ethereum, ai, 教程, 软件, 编程, 开发, 运维, 云计算, 网络, 互联网, 比特币, 以太坊, 操作系统, 智能合约, 数字货币
+  description: 尤科闯的个人网站，记录长期写作、人生经历、产品思考，以及边学边做的地图和效率工具。
+  keywords: 尤科闯, youkechuang, 个人博客, 人生记录, 产品思考, 学习工具, 地图学习, 效率工具
   theme: default
   language: zh-CN
   # set the /<rootPath> pathname under which your site is served
@@ -24,10 +24,10 @@ site:
     - title: 文档
       uri: /static/docs/product.html
   git:
-    base-url: https://github.com/youkechaung/youkechuang.cn/blob/main/source
+    base-url: https://github.com/youkechuang/youkechuang.cn/blob/main/source
   contact:
     name: George You
-    github: https://github.com/youkechaung/youkechuang.cn
+    github: https://github.com/youkechuang/youkechuang.cn
     twitter: https://twitter.com/GeorgeYoukc
   books:
     index-marker: true
@@ -62,7 +62,7 @@ site:
           <div>
             &copy;<a href="/">youkechuang.cn</a> 
             - <a href="https://weibo.com/youkc" target="_blank">微博</a>
-            - <a href="https://github.com/youkechaung/youkechuang.cn" target="_blank">GitHub</a>
+            - <a href="https://github.com/youkechuang/youkechuang.cn" target="_blank" rel="noopener noreferrer">GitHub</a>
             - <a href="/pages/license/index.html" target="_blank">License</a>
           </div>
 
