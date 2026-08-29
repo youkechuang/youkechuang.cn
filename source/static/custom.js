@@ -16,6 +16,53 @@ function initFocusReminderGlobal() {
 
 runInitScripts.push(['/', initFocusReminderGlobal, null]);
 
+/******************** V6: search UX (keyboard + i18n + empty state) ********************/
+
+function initSearchUX() {
+    const input = document.getElementById('gsi-search-input');
+    if (!input) return;
+    // 中文占位符与可访问性
+    input.placeholder = '搜索文章、笔记和工具…';
+    input.setAttribute('aria-label', '站内搜索');
+    input.type = 'search';
+
+    let container = null;
+    for (let el = input; el; el = el.parentElement) {
+        if (el.classList && el.classList.contains('gsc-popup-container')) { container = el; break; }
+    }
+    const results = document.getElementById('gsi-search-results');
+
+    // Esc 关闭搜索面板
+    if (container) {
+        container.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && window.gitsite && gitsite.hideSearch) {
+                gitsite.hideSearch();
+            }
+        });
+    }
+
+    // 结果渲染增强：数量提示 + 空状态（观察主题渲染后的 DOM）
+    if (results && 'MutationObserver' in window) {
+        const mo = new MutationObserver(() => {
+            const q = (input.value || '').trim();
+            if (!q) return;
+            const items = results.querySelectorAll(':scope > div');
+            const hasEmpty = results.querySelector('.gsi-search-empty');
+            if (items.length === 0 && results.children.length <= 1 && !hasEmpty) {
+                results.innerHTML = '<div class="gsi-search-empty">没有找到相关内容，换个关键词试试</div>';
+            } else if (items.length > 0 && !results.querySelector('.gsi-search-count')) {
+                const count = document.createElement('div');
+                count.className = 'gsi-search-count';
+                count.textContent = `共 ${items.length} 条结果`;
+                results.insertBefore(count, results.firstChild);
+            }
+        });
+        mo.observe(results, { childList: true });
+    }
+}
+
+runInitScripts.push(['/', initSearchUX, null]);
+
 /******************** blog page views ********************/
 
 function initBlogPageViews() {
