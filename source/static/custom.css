@@ -41,7 +41,7 @@
     --bg-elev: #141c19;
     --ink: #e3ebe6;
     --ink-soft: #a5b3ac;
-    --ink-faint: #6f7d76;
+    --ink-faint: #84948c;
     --line: #223029;
     --line-soft: #1b2622;
 
@@ -1255,5 +1255,29 @@ div.git-explorer>div.git-explorer-frame>div.git-explorer-frame-code>pre>code {
         grid-template-columns: 1fr;
         gap: 22px;
         padding: 24px;
+    }
+}
+
+/* ---------- 16. a11y & touch (V4) ---------- */
+
+/* 触控目标：小链接补点击区域（移动端） */
+@media (max-width: 640px) {
+    .home-section-more,
+    #gsi-footer a {
+        position: relative;
+    }
+    .home-section-more::before,
+    #gsi-footer a::before {
+        content: "";
+        position: absolute;
+        inset: -10px;
+    }
+}
+
+/* 触屏悬停态：避免 sticky hover */
+@media (hover: hover) {
+    .home-entry-card:hover,
+    .home-about-card:hover {
+        transform: translateY(-3px);
     }
 }
