@@ -986,6 +986,13 @@ body::before {
 }
 
 @media (prefers-reduced-motion: reduce) {
+    .home-hero,
+    .home-section {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+
     html {
         scroll-behavior: auto;
     }
@@ -1130,4 +1137,26 @@ div.git-explorer>div.git-explorer-frame>div.git-explorer-frame-code>pre {
 div.git-explorer>div.git-explorer-frame>div.git-explorer-frame-code>pre>code {
     font-size: 0.875rem;
     line-height: 1.25rem;
+}
+
+/* ---------- 14. scroll entrance (V2) ---------- */
+
+.home-hero,
+.home-section {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.home-hero.is-in,
+.home-section.is-in {
+    opacity: 1;
+    transform: none;
+}
+
+/* JS 不可用时保证内容可见 */
+.no-anim .home-hero,
+.no-anim .home-section {
+    opacity: 1;
+    transform: none;
 }

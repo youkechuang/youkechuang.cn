@@ -75,6 +75,25 @@
 </section>
 
 <script>
+    // V2: 滚动入场动效（IntersectionObserver，降级安全）
+    documentReady(function () {
+        if (!('IntersectionObserver' in window) ||
+            window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.documentElement.classList.add('no-anim');
+            return;
+        }
+        const targets = document.querySelectorAll('.home-hero, .home-section');
+        const io = new IntersectionObserver((entries) => {
+            for (const e of entries) {
+                if (e.isIntersecting) {
+                    e.target.classList.add('is-in');
+                    io.unobserve(e.target);
+                }
+            }
+        }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+        targets.forEach(t => io.observe(t));
+    });
+
     documentReady(async ()=>{
         const countEl = document.getElementById('homeBlogCount');
         const latestDateEl = document.getElementById('homeLatestDate');
