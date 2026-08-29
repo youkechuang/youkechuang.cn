@@ -17,6 +17,37 @@
     </div>
 </section>
 
+<section class="home-section" id="home-about">
+    <div class="home-about">
+        <div class="home-about-copy">
+            <p class="home-eyebrow">关于我</p>
+            <h2>写作、工程与产品</h2>
+            <p>我是尤科闯，长期记录生活与思考，也喜欢动手把想法变成能用的工具。这里有三条主线：用文字梳理经历与认知，用工程解决实际问题，用产品思维做小而有用的东西。</p>
+            <div class="home-about-tags">
+                <span>长期写作</span>
+                <span>人生记录</span>
+                <span>产品思考</span>
+                <span>效率工具</span>
+                <span>地图学习</span>
+            </div>
+        </div>
+        <div class="home-about-cards">
+            <a class="home-about-card" href="/static/life-journey/index.html">
+                <strong>人生足迹</strong>
+                <p>按时间线回看我走过的地方与经历。</p>
+            </a>
+            <a class="home-about-card" href="/blogs/all/index.html">
+                <strong>精选文章</strong>
+                <p>从育儿到产品，从英语到 AI，持续输出。</p>
+            </a>
+            <a class="home-about-card" href="/static/startup/index.html">
+                <strong>正在做的事</strong>
+                <p>探索中的产品、App、工具和原型项目。</p>
+            </a>
+        </div>
+    </div>
+</section>
+
 <section class="home-section">
     <div class="home-section-head">
         <p class="home-eyebrow">主要入口</p>
