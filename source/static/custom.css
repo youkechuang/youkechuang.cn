@@ -1450,3 +1450,30 @@ div.git-explorer>div.git-explorer-frame>div.git-explorer-frame-code>pre>code {
     color: var(--ink-faint);
     font-size: 0.92rem;
 }
+
+/* ---------- 19. interaction polish (V8) ---------- */
+
+/* 主操作按钮按压反馈 */
+.home-actions a {
+    will-change: transform;
+}
+
+/* 卡片图片避免布局抖动 */
+.home-entry-card img {
+    background: var(--line-soft);
+}
+
+/* 导航链接焦点可见性（键盘） */
+#gsi-nav-menu > li > a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* 移动端菜单项点击区域 */
+@media (max-width: 640px) {
+    #gsi-nav-menu-small > li > a {
+        display: flex;
+        align-items: center;
+        min-height: 44px;
+    }
+}

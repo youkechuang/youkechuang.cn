@@ -63,6 +63,23 @@ function initSearchUX() {
 
 runInitScripts.push(['/', initSearchUX, null]);
 
+/******************** V8: nav active state for /static/* tools ********************/
+
+function initNavActiveFix() {
+    if (location.pathname.indexOf('/static/') !== 0) return;
+    // 主题只按导航 uri 前缀匹配，/static/ 下的各工具页需要精确匹配
+    document.querySelectorAll('#gsi-nav-menu li.gsc-nav-li a').forEach(a => {
+        a.classList.remove('gsc-active');
+        const href = a.getAttribute('href') || '';
+        // 工具页路径带 /static/ 前缀，与导航 uri 前缀匹配
+        if (href && href !== '#0' && href.indexOf('/static/') === 0 && location.pathname.indexOf(href) === 0) {
+            a.classList.add('gsc-active');
+        }
+    });
+}
+
+runInitScripts.push(['/', initNavActiveFix, null]);
+
 /******************** blog page views ********************/
 
 function initBlogPageViews() {
