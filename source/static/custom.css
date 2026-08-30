@@ -1286,15 +1286,15 @@ div.git-explorer>div.git-explorer-frame>div.git-explorer-frame-code>pre>code {
 
 /* 阅读进度条 */
 #gsi-read-progress {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    height: 2.5px;
+    height: 3px;
     background: var(--accent);
     transform: scaleX(0);
     transform-origin: left center;
-    z-index: 20;
+    z-index: 60;
     pointer-events: none;
 }
 
