@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="home-about-cards">
-            <a class="home-about-card" href="/static/life-journey/index.html">
+            <a class="home-about-card" href="/books/onethird/travel/index.html">
                 <strong>人生足迹</strong>
                 <p>按时间线回看我走过的地方与经历。</p>
             </a>
