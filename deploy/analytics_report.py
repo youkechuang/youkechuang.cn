@@ -446,6 +446,11 @@ def render_html(events):
         "generatedAt": generated_at.isoformat(),
         "totalViews": total_views,
         "uniqueIps": unique_ips,
+        # 博客浏览量查询需要完整映射，不能使用只保留前 100 项的页面排行。
+        "pageViews": {
+            path: {"views": views, "uniqueIps": len(page_ips[path])}
+            for path, views in page_views.items()
+        },
         "pages": [
             {"path": path, "views": views, "uniqueIps": len(page_ips[path])}
             for path, views in top_pages
